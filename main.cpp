@@ -4,13 +4,10 @@
 
 int main() {
     HashOctree::HashOctree ho;
+    ho.addDataPoint(0.5, 0.5, 0.5, 0.1, 0.1, 0.1, (void *)5);
     std::cout << HashOctree::Exporter::toString(ho);
-    std::cout << ho.create((void *)5) << "\n";
-    std::cout << HashOctree::Exporter::toString(ho);
-    std::cout << ho.create((void *)7) << "\n";
-    std::cout << ho.changeRoot(HashOctree::Encryptor::encrypt((void *)5)) << "\n";
-    std::cout << HashOctree::Exporter::toString(ho);
-    std::cout << ho.changeRoot(HashOctree::Encryptor::encrypt((void *)7)) << "\n";
-    std::cout << HashOctree::Exporter::toString(ho);
+    auto exported = HashOctree::Exporter::toByteArray(ho);
+    HashOctree::HashOctree ho2 = HashOctree::Importer::fromByteArray(exported);
+    std::cout << HashOctree::Exporter::toString(ho2);
     return 0;
 }
