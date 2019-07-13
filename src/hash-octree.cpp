@@ -220,20 +220,20 @@ namespace HashOctree {
             const NodeOperationBlock &curr) {
         // if data point fully contains node dont split
         if (x - hw <= curr.origin[0] - curr.halfDim[0] &&
-            curr.origin[0] + curr.halfDim[0] < x + hw &&
+            curr.origin[0] + curr.halfDim[0] <= x + hw &&
             y - hh <= curr.origin[1] - curr.halfDim[1] &&
-            curr.origin[1] + curr.halfDim[1] < y + hh &&
+            curr.origin[1] + curr.halfDim[1] <= y + hh &&
             z - hd <= curr.origin[2] - curr.halfDim[2] &&
-            curr.origin[2] + curr.halfDim[2] < z + hd) {
+            curr.origin[2] + curr.halfDim[2] <= z + hd) {
             key_t key;
             this->create(data, &key, 0);
             return key;
         }
 
         // if data point doesnt have any intersection with node dont do anything
-        if ((x + hw < curr.origin[0] - curr.halfDim[0] || curr.origin[0] + curr.halfDim[0] < x - hw) &&
-            (y + hh < curr.origin[1] - curr.halfDim[1] || curr.origin[1] + curr.halfDim[1] < y - hh) &&
-            (z + hd < curr.origin[2] - curr.halfDim[2] || curr.origin[2] + curr.halfDim[2] < z - hd)) {
+        if ((x + hw <= curr.origin[0] - curr.halfDim[0] || curr.origin[0] + curr.halfDim[0] <= x - hw) ||
+            (y + hh <= curr.origin[1] - curr.halfDim[1] || curr.origin[1] + curr.halfDim[1] <= y - hh) ||
+            (z + hd <= curr.origin[2] - curr.halfDim[2] || curr.origin[2] + curr.halfDim[2] <= z - hd)) {
             return curr.ncb->key;
         }
 
@@ -453,6 +453,14 @@ namespace HashOctree {
         }
 
         ret.recountRefs();
+
+        return ret;
+    }
+
+
+
+    HashOctree Importer::fromJson(const std::string &str) {
+        HashOctree ret;
 
         return ret;
     }
