@@ -4,40 +4,7 @@
 
 #include "hash-octree.h"
 
-#define P (32416187567)
-#define Q (1610612741)
-
 namespace HashOctree {
-
-    Node::Node(const key_t *children, const void *data) {
-        this->data = (void *)data;
-        for (size_t i = 0; i < 8; i++)
-            this->children[i] = children[i];
-    }
-
-    key_t Encryptor::encrypt(const key_t *children, const void *data) {
-        key_t ret, p;
-
-        p = P;
-        ret = (key_t)data * Q;
-        for (size_t i = 0; i < 8; i++) {
-            ret += (children[i] * p);
-            p *= P;
-        }
-
-        return ret;
-    }
-
-    key_t Encryptor::encrypt(const void *data) {
-        key_t empty_children[8];
-        for (size_t i = 0; i < 8; i++)
-            empty_children[i] = 0;
-        return Encryptor::encrypt(empty_children, data);
-    }
-
-    key_t Encryptor::encrypt(const Node &node) {
-        return Encryptor::encrypt(node.children, node.data);
-    }
 
     void HashOctree::init(const dim_t *origin, const dim_t *halfDim, const dim_t *precision) {
         this->origin[0] = origin[0];
@@ -83,6 +50,18 @@ namespace HashOctree {
 
         this->init(def_origin, def_halfDim, def_precision);
     }
+
+    dim_t HashOctree::getX() const { return this->origin[0]; }
+
+    dim_t HashOctree::getY() const { return this->origin[1]; }
+
+    dim_t HashOctree::getZ() const { return this->origin[2]; }
+
+    dim_t HashOctree::getHalfWidth() const { return this->halfDim[0]; }
+
+    dim_t HashOctree::getHalfHeight() const { return this->halfDim[1]; }
+
+    dim_t HashOctree::getHalfDepth() const { return this->halfDim[2]; }
 
     status_t HashOctree::remove(const NodeControlBlock &ncb, int flags) {
         if (this->nodes.count(ncb.key) == 0)
@@ -297,172 +276,6 @@ namespace HashOctree {
                 this->nodes[kv.second.node.children[i]].refs++;
 
         return OK;
-    }
-
-    std::string Exporter::toString(const HashOctree &ho) {
-        std::stringstream ss("");
-        ss.fill('0');
-        ss << "root: " << std::setw(16) << std::hex << ho.root << "\n";
-        for (const auto &kv : ho.nodes) {
-            ss << std::setw(16) << std::hex << kv.first << ": ";
-            ss << "data: " << std::setw(16) << std::hex << (uint64_t)kv.second.node.data << ", children: ";
-            for (size_t i = 0; i < 8; i++)
-                ss << std::setw(16) << std::hex << kv.second.node.children[i] << " ";
-            ss << "(" << std::dec << kv.second.refs << " ref(s))\n";
-        }
-
-        return ss.str();
-    }
-
-    std::string Exporter::toJson(const HashOctree &ho, size_t indentWidth, bool newLines) {
-        std::stringstream ss("");
-        size_t indents = 0;
-        char newLine;
-        if (newLines)
-            newLine = '\n';
-        else
-            newLine = '\0';
-        char space;
-        if (newLines)
-            space = ' ';
-        else
-            space = '\0';
-        ss << "{" << newLine;
-        indents++;
-        for (size_t i = 0; i < indents * indentWidth; i++)
-            ss << space;
-        ss << "\"root\":" << space << ho.root << "," << newLine;
-
-        for (size_t i = 0; i < indents * indentWidth; i++)
-            ss << " ";
-        ss << "\"nodes\":" << space << "[" << newLine;
-        indents++;
-        bool first = true;
-        for (const auto &kv : ho.nodes) {
-            if (!first) {
-                ss << "," << newLine;
-            }
-            else {
-                first = false;
-            }
-            for (size_t i = 0; i < indents * indentWidth; i++)
-                ss << space;
-            ss << "{" << newLine;
-            indents++;
-
-            for (size_t i = 0; i < indents * indentWidth; i++)
-                ss << space;
-            ss << "\"key\":" << space << kv.first << "," << newLine;
-
-            for (size_t i = 0; i < indents * indentWidth; i++)
-                ss << space;
-            ss << "\"data\":" << space << (uint64_t)kv.second.node.data << "," << newLine;
-
-            for (size_t i = 0; i < indents * indentWidth; i++)
-                ss << space;
-            ss << "\"children\":" << space << "[" << newLine;
-            indents++;
-
-            for (size_t i = 0; i < 8; i++) {
-                for (size_t j = 0; j < indents * indentWidth; j++)
-                    ss << space;
-
-                ss << kv.second.node.children[i];
-                if (i != 7)
-                    ss << "," << newLine;
-                else
-                    ss << newLine;
-            }
-            indents--;
-            for (size_t i = 0; i < indents * indentWidth; i++)
-                ss << space;
-            ss << "]" << newLine;
-
-            indents--;
-            for (size_t i = 0; i < indents * indentWidth; i++)
-                ss << space;
-            ss << "}";
-
-        }
-        ss << newLine;
-        indents--;
-        for (size_t i = 0; i < indents * indentWidth; i++)
-            ss << space;
-        ss << "]" << newLine;
-
-        indents--;
-        for (size_t i = 0; i < indents * indentWidth; i++)
-            ss << space;
-        ss << "}" << newLine;
-
-        return ss.str();
-    }
-
-    void push_uint64_t(std::vector<char> &v, uint64_t val) {
-        size_t bytes = 8;
-        while (bytes--) {
-            v.push_back(val & 255);
-            val = val >> 8;
-        }
-    }
-
-    uint64_t read_uint64_t(const std::vector<char> &v, size_t pos) {
-        size_t bytes = 8;
-        uint64_t ret = 0;
-        while (bytes--) {
-            ret = ret << 8;
-            ret += (unsigned char)v[pos + bytes];
-        }
-        return ret;
-    }
-
-    std::vector<char> Exporter::toByteArray(const HashOctree &ho) {
-        std::vector<char> ret;
-        push_uint64_t(ret, ho.root);
-
-        for (const auto &kv : ho.nodes) {
-            push_uint64_t(ret, kv.first);
-            push_uint64_t(ret, (uint64_t)kv.second.node.data);
-            for (int i = 0; i < 8; i++)
-                push_uint64_t(ret, kv.second.node.children[i]);
-        }
-
-        return ret;
-    }
-
-    HashOctree Importer::fromByteArray(const std::vector<char> &array) {
-        HashOctree ret;
-        size_t read_id = 0;
-        ret.root = read_uint64_t(array, read_id);
-        read_id += 8;
-
-        while (read_id < array.size()) {
-            uint64_t key = read_uint64_t(array, read_id);
-            read_id += 8;
-            uint64_t data = read_uint64_t(array, read_id);
-            read_id += 8;
-            uint64_t children[8];
-            for (int i = 0; i < 8; i++) {
-                children[i] = read_uint64_t(array, read_id);
-                read_id += 8;
-            }
-            ret.nodes[key].key = key;
-            ret.nodes[key].node.data = (void *)data;
-            for (int i = 0; i < 8; i++)
-                ret.nodes[key].node.children[i] = children[i];
-        }
-
-        ret.recountRefs();
-
-        return ret;
-    }
-
-
-
-    HashOctree Importer::fromJson(const std::string &str) {
-        HashOctree ret;
-
-        return ret;
     }
 
 }

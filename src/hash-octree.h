@@ -6,99 +6,13 @@
 #include <iostream>
 #include <vector>
 
+#include "node.h"
+
 namespace HashOctree {
-
-    using key_t = uint64_t;
-    using dim_t = double;
-    using status_t = int64_t;
-
-    const status_t INDEX_OUT_OF_BOUNDS = -7;
-    const status_t KEY_COLLISION       = -6;
-    const status_t CHILD_DOESNT_EXIST  = -5;
-    const status_t NODE_DOESNT_EXIST   = -4;
-    const status_t NODE_IS_ROOT        = -3;
-    const status_t NODE_HAS_REFS       = -2;
-    const status_t NODE_EXISTS         = -1;
-    const status_t OK                  = 0;
-    const status_t NODE_REPLACED       = 1;
-
-    const int      FL_REC              = 1;
-    const int      FL_IGNORE_REFS      = 2;
-    const int      FL_FORCE            = 4;
-
-    class Node {
-    public:
-        key_t children[8];
-        void *data;
-
-        Node() = default;
-
-        Node(const key_t *children, const void *data);
-    };
-
-    class Encryptor {
-    public:
-        /**
-         * Produces a key for a given node.
-         * Nodes with the same children keys
-         * and same data field value always
-         * have the same key. Also a key of
-         * a node with all children keys
-         * equal to 0 and nullptr data value
-         * is also 0.
-         * @param node HashOctree node object to be encrypted
-         * @return key produced from the node object
-         */
-        static key_t encrypt(const Node &node);
-
-        /**
-         * Produces a key for a given node.
-         * Nodes with the same children keys
-         * and same data field value always
-         * have the same key. Also a key of
-         * a node with all children keys
-         * equal to 0 and nullptr data value
-         * is also 0.
-         * @param children children key values of the node object
-         * @param data data field value of the node object
-         * @return key produced from the node object
-         */
-        static key_t encrypt(const key_t *children, const void *data);
-
-        /**
-         * Produces a key for a given node.
-         * Nodes with the same children keys
-         * and same data field value always
-         * have the same key. Also a key of
-         * a node with all children keys
-         * equal to 0 and nullptr data value
-         * is also 0.
-         * @param data data field value of the node object
-         * @return key produced from the node object with
-         * @p data and children keys equal to 0.
-         */
-        static key_t encrypt(const void *data);
-    };
-
-    class NodeControlBlock {
-    public:
-        key_t key;
-        Node node;
-        int32_t refs;
-    };
-
-    class NodeOperationBlock {
-    public:
-        NodeControlBlock *ncb;
-        dim_t origin[3];
-        dim_t halfDim[3];
-        NodeControlBlock *parent;
-    };
 
     class HashOctree {
         friend class Exporter;
         friend class Importer;
-        friend class Debugger;
     private:
         std::unordered_map<key_t, NodeControlBlock> nodes;
         key_t root;
@@ -115,6 +29,18 @@ namespace HashOctree {
         HashOctree();
 
         HashOctree(const dim_t *origin, const dim_t *halfDim, const dim_t *precision);
+
+        dim_t getX() const;
+
+        dim_t getY() const;
+
+        dim_t getZ() const;
+
+        dim_t getHalfWidth() const;
+
+        dim_t getHalfHeight() const;
+
+        dim_t getHalfDepth() const;
 
         status_t remove(const NodeControlBlock &ncb, int flags);
 
@@ -139,26 +65,6 @@ namespace HashOctree {
         status_t recountRefs();
     };
 
-    class Exporter {
-    public:
-        static std::string toString(const HashOctree &ho);
-
-        static std::vector<char> toByteArray(const HashOctree &ho);
-
-        static std::string toJson(const HashOctree &ho, size_t indentWidth, bool newLines);
-    };
-
-    class Importer {
-    public:
-        static HashOctree fromByteArray(const std::vector<char> &array);
-
-        static HashOctree fromJson(const std::string &str);
-    };
-
-    class Debugger {
-    public:
-        //static bool hasNoRefNodes(const HashOctree &ho);
-    };
 }
 
 #endif //HASH_OCTREE_HASH_OCTREE_H
