@@ -14,7 +14,6 @@ set(libraries
         src/exporter.h)
 
 set(sources
-        src/data-utils.cpp
         src/point-data.cpp
         src/encryptor.cpp
         src/node.cpp
