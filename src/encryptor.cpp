@@ -30,4 +30,5 @@ namespace HashOctree {
     key_t Encryptor::encrypt(const Node &node) {
         return Encryptor::encrypt(node.children, node.data);
     }
+
 }

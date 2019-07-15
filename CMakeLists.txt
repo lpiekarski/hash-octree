@@ -26,9 +26,9 @@ set(test_libraries
         tests/test.h)
 
 # test executables
-add_executable(hash_octree_test ${sources} tests/hash-octree-test.cpp)
+add_executable(hash_octree_test ${libraries} ${sources} tests/hash-octree-test.cpp)
 
-add_executable(point_data_test ${sources} tests/point-data-test.cpp)
+add_executable(point_data_test ${libraries} ${sources} tests/point-data-test.cpp)
 
 # library
-add_library(hash-octree ${sources})
+add_library(hash-octree ${libraries} ${sources})

@@ -1,5 +1,5 @@
-#include "test.h"
 #include <fstream>
+#include "test.h"
 #include "../src/hash-octree.h"
 
 #define TESTS_NUM 3

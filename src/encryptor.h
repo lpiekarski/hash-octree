@@ -49,6 +49,7 @@ namespace HashOctree {
          */
         static key_t encrypt(const void *data);
     };
+
 }
 
 #endif //HASH_OCTREE_ENCRYPTOR_H

@@ -1,6 +1,7 @@
 #include "data-utils.h"
 
 namespace HashOctree {
+
     template<typename T, typename>
     int DataUtils::read_int(const std::vector<char> &v, size_t pos, T &ret) {
         size_t bytes = sizeof(T);
