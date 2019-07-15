@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "hash-octree.h"
+#include "encryptor.h"
 
 namespace HashOctree {
 

@@ -4,6 +4,7 @@
 #include <cstdint>
 
 namespace HashOctree {
+
     using key_t = uint64_t;
     using dim_t = double;
     using status_t = int64_t;
@@ -21,6 +22,7 @@ namespace HashOctree {
     const int      FL_REC              = 1;
     const int      FL_IGNORE_REFS      = 2;
     const int      FL_FORCE            = 4;
+
 }
 
 #endif //HASH_OCTREE_DEFS_H

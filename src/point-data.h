@@ -21,6 +21,8 @@ namespace HashOctree {
 
     class PointData {
     public:
+        PointData();
+
         PointData(std::string filename);
 
         int readAll(std::string filename);

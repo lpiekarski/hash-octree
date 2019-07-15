@@ -1,5 +1,5 @@
-#if !defined(__TESTS_H__)
-#define __TESTS_H__
+#if !defined(__TEST_H__)
+#define __TEST_H__
 
 #include <chrono>
 #include <cstdio>
@@ -28,6 +28,16 @@ const char *test_result[] = {
     if (!(pred)) {\
         fprintf(stderr,\
                 "%s:%d assertion failed\n",\
+                __func__,\
+                __LINE__\
+                );\
+        return TEST_ASSERTION_FAILED;\
+    }
+
+#define assertEqual(expr, val)\
+    if (expr != val) {\
+        fprintf(stderr,\
+                "%s:%d equal assertion failed",\
                 __func__,\
                 __LINE__\
                 );\
@@ -67,4 +77,4 @@ const char *test_result[] = {
         fprintf((stream), "\t%s test result: %s\n\n",  testContext.c_str(), test_result[__result]);\
     }
 
-#endif // __TESTS_H__
+#endif // __TEST_H__
