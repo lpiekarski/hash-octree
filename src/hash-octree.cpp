@@ -195,13 +195,20 @@ namespace HashOctree {
         rootNob.halfDim[1] = this->halfDim[1];
         rootNob.halfDim[2] = this->halfDim[2];
 
-        this->changeRoot(this->addDataPointRec(x, y, z, hw, hh, hd, data, rootNob));
+        key_t newRoot;
+        status_t status = this->addDataPointRec(x, y, z, hw, hh, hd, data, rootNob, &newRoot);
 
-        return OK;
+        if (status != OK && status != NODE_EXISTS)
+            return status;
+
+        this->changeRoot(newRoot);
+        return status;
     }
 
-    key_t HashOctree::addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
-            const NodeOperationBlock &curr) {
+    status_t HashOctree::addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
+            const NodeOperationBlock &curr, key_t *out_key) {
+        status_t ret = OK;
+
         // if data point fully contains node dont split
         if (x - hw <= curr.origin[0] - curr.halfDim[0] &&
             curr.origin[0] + curr.halfDim[0] <= x + hw &&
@@ -210,15 +217,19 @@ namespace HashOctree {
             z - hd <= curr.origin[2] - curr.halfDim[2] &&
             curr.origin[2] + curr.halfDim[2] <= z + hd) {
             key_t key;
-            this->create(data, &key, 0);
-            return key;
+            ret = this->create(data, &key);
+            if (out_key != nullptr)
+                (*out_key) = key;
+            return ret;
         }
 
         // if data point doesnt have any intersection with node dont do anything
         if ((x + hw <= curr.origin[0] - curr.halfDim[0] || curr.origin[0] + curr.halfDim[0] <= x - hw) ||
             (y + hh <= curr.origin[1] - curr.halfDim[1] || curr.origin[1] + curr.halfDim[1] <= y - hh) ||
             (z + hd <= curr.origin[2] - curr.halfDim[2] || curr.origin[2] + curr.halfDim[2] <= z - hd)) {
-            return curr.ncb->key;
+            if (out_key != nullptr)
+                (*out_key) = curr.ncb->key;
+            return ret;
         }
 
         // precision bailout
@@ -226,8 +237,10 @@ namespace HashOctree {
             curr.halfDim[1] < this->precision[1] ||
             curr.halfDim[2] < this->precision[2]) {
             key_t key;
-            this->create(data, &key, 0);
-            return key;
+            ret = this->create(data, &key);
+            if (out_key != nullptr)
+                (*out_key) = key;
+            return ret;
         }
 
         // add data point recursively
@@ -242,7 +255,12 @@ namespace HashOctree {
             childNob.origin[0] = curr.origin[0] + (2 * (i % 2) - 1) * childNob.halfDim[0];
             childNob.origin[1] = curr.origin[1] + (2 * ((i / 2) % 2) - 1) * childNob.halfDim[1];
             childNob.origin[2] = curr.origin[2] + (2 * (i / 4) - 1) * childNob.halfDim[2];
-            children[i] = this->addDataPointRec(x, y, z, hw, hh, hd, data, childNob);
+            status_t childStatus = this->addDataPointRec(x, y, z, hw, hh, hd, data, childNob, &children[i]);
+
+            if (childStatus != OK && childStatus != NODE_EXISTS) {
+                ret = childStatus;
+                return ret;
+            }
         }
 
         // if all children store the same data we can merge them
@@ -261,8 +279,10 @@ namespace HashOctree {
         }*/
 
         key_t key;
-        this->create(children, nullptr, &key, 0);
-        return key;
+        ret = this->create(children, nullptr, &key);
+        if (out_key != nullptr)
+            (*out_key) = key;
+        return ret;
     }
 
     status_t HashOctree::recountRefs() {

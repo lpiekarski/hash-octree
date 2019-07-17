@@ -35,8 +35,8 @@ namespace HashOctree {
          * @param curr
          * @return
          */
-        key_t addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
-                const NodeOperationBlock &curr);
+        status_t addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
+                const NodeOperationBlock &curr, key_t *out_key);
 
     public:
         HashOctree();
@@ -55,17 +55,17 @@ namespace HashOctree {
 
         dim_t getHalfDepth() const;
 
-        status_t remove(const NodeControlBlock &ncb, int flags);
+        status_t remove(const NodeControlBlock &ncb, int flags=0);
 
-        status_t remove(const Node &n, int flags);
+        status_t remove(const Node &n, int flags=0);
 
-        status_t remove(key_t nkey, int flags);
+        status_t remove(key_t nkey, int flags=0);
 
-        status_t create(const Node &n, key_t *res, int flags);
+        status_t create(const Node &n, key_t *res, int flags=0);
 
-        status_t create(const key_t *children, const void *data, key_t *res, int flags);
+        status_t create(const key_t *children, const void *data, key_t *res, int flags=0);
 
-        status_t create(const void *data, key_t *res, int flags);
+        status_t create(const void *data, key_t *res, int flags=0);
 
         status_t changeRoot(key_t newRoot);
 
