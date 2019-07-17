@@ -281,7 +281,8 @@ namespace HashOctree {
 
             if (childStatus != OK && childStatus != NODE_EXISTS) {
                 ret = childStatus;
-                this->remove(cleanupKey, FL_REC);
+                if (cleanupKey != 0)
+                    this->remove(cleanupKey, FL_REC);
                 return ret;
             }
         }
@@ -300,7 +301,8 @@ namespace HashOctree {
             ret = this->create(sameData, &key, 0);
             if (out_key != nullptr)
                 (*out_key) = key;
-            this->remove(cleanupKey, FL_REC);
+            if (cleanupKey != 0)
+                this->remove(cleanupKey, FL_REC);
             return ret;
         }
 
@@ -308,7 +310,8 @@ namespace HashOctree {
         ret = this->create(children, nullptr, &key);
         if (out_key != nullptr)
             (*out_key) = key;
-        this->remove(cleanupKey, FL_REC);
+        if (cleanupKey != 0)
+            this->remove(cleanupKey, FL_REC);
         return ret;
     }
 
