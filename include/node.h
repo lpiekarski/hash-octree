@@ -13,6 +13,11 @@ namespace HashOctree {
         Node() = default;
 
         Node(const key_t *children, const void *data);
+
+        friend bool operator==(const Node &n1, const Node &n2);
+
+        friend bool operator!=(const Node &n1, const Node &n2);
+
     };
 
     class NodeControlBlock {
@@ -20,6 +25,10 @@ namespace HashOctree {
         key_t key;
         Node node;
         int32_t refs;
+
+        friend bool operator==(const NodeControlBlock &ncb1, const NodeControlBlock &ncb2);
+
+        friend bool operator!=(const NodeControlBlock &ncb1, const NodeControlBlock &ncb2);
     };
 
     class NodeOperationBlock {

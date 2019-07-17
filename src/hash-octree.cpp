@@ -118,15 +118,7 @@ namespace HashOctree {
             if (res != nullptr)
                 (*res) = nkey;
 
-            if (ncb.node.data == n.data &&
-                ncb.node.children[0] == n.children[0] &&
-                ncb.node.children[1] == n.children[1] &&
-                ncb.node.children[2] == n.children[2] &&
-                ncb.node.children[3] == n.children[3] &&
-                ncb.node.children[4] == n.children[4] &&
-                ncb.node.children[5] == n.children[5] &&
-                ncb.node.children[6] == n.children[6] &&
-                ncb.node.children[7] == n.children[7])
+            if (ncb.node == n)
                 return NODE_EXISTS;
             return KEY_COLLISION;
         }
