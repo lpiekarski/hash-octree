@@ -35,8 +35,8 @@ namespace HashOctree {
          * @param curr
          * @return
          */
-        key_t addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
-                const NodeOperationBlock &curr);
+        status_t addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
+                const NodeOperationBlock &curr, key_t *out_key);
 
     public:
         HashOctree();
