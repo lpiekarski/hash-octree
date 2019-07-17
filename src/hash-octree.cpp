@@ -206,8 +206,9 @@ namespace HashOctree {
     }
 
     status_t HashOctree::addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
-            const NodeOperationBlock &curr, key_t *out_key) {
+            NodeOperationBlock &curr, key_t *out_key) {
         status_t ret = OK;
+        key_t cleanupKey = 0;
 
         // if data point fully contains node dont split
         if (x - hw <= curr.origin[0] - curr.halfDim[0] &&
@@ -243,6 +244,27 @@ namespace HashOctree {
             return ret;
         }
 
+        // if there is any data in this node, it has to be pushed down the tree
+        if (curr.ncb->node.data != nullptr) {
+            key_t key;
+            key_t unmerge_children[8];
+            for (int i = 0; i < 8; i++)
+                unmerge_children[i] = curr.ncb->key;
+
+            ret = this->create(unmerge_children, nullptr, &key);
+
+            // can't create a new node for curr
+            if (ret != OK && ret != NODE_EXISTS)
+                return ret;
+
+            // move into a new path in octree
+            // we have to mark the new node for cleanup since it is outside
+            // of the main root-leaf path and can become unused
+            // after coming back from children
+            curr.ncb = &this->nodes[key];
+            cleanupKey = key;
+        }
+
         // add data point recursively
         key_t children[8];
         for (int i = 0; i < 8; i++) {
@@ -259,12 +281,13 @@ namespace HashOctree {
 
             if (childStatus != OK && childStatus != NODE_EXISTS) {
                 ret = childStatus;
+                this->remove(cleanupKey, FL_REC);
                 return ret;
             }
         }
 
         // if all children store the same data we can merge them
-        /*bool hasSameData = true;
+        bool hasSameData = true;
         void *sameData = this->nodes[children[0]].node.data;
         for (int i = 1; i < 8; i++) {
             if (this->nodes[children[i]].node.data != sameData) {
@@ -274,14 +297,18 @@ namespace HashOctree {
         }
         if (hasSameData && sameData != nullptr) {
             key_t key;
-            this->create(sameData, &key, 0);
-            return key;
-        }*/
+            ret = this->create(sameData, &key, 0);
+            if (out_key != nullptr)
+                (*out_key) = key;
+            this->remove(cleanupKey, FL_REC);
+            return ret;
+        }
 
         key_t key;
         ret = this->create(children, nullptr, &key);
         if (out_key != nullptr)
             (*out_key) = key;
+        this->remove(cleanupKey, FL_REC);
         return ret;
     }
 
