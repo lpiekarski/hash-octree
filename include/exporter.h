@@ -2,6 +2,7 @@
 #define HASH_OCTREE_EXPORTER_H
 
 #include "hash-octree.h"
+#include "point-data.h"
 
 namespace HashOctree {
 
@@ -11,7 +12,9 @@ namespace HashOctree {
 
         static std::vector<char> toByteArray(const HashOctree &ho);
 
-        static std::string toJson(const HashOctree &ho, size_t indentWidth, bool newLines);
+        static std::string toJson(const HashOctree &ho, size_t indentWidth=0, bool newLines=false);
+
+        //static PointData toPointData(const HashOctree &ho);
     };
 
 }

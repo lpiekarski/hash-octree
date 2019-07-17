@@ -1,5 +1,5 @@
-#include "point-data.h"
-#include "data-utils.h"
+#include "../include/point-data.h"
+#include "../include/data-utils.h"
 
 namespace HashOctree {
 
@@ -17,7 +17,5 @@ namespace HashOctree {
 
         return os;
     }
-
-    
 
 }

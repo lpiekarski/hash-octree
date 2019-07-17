@@ -1,8 +1,9 @@
 #include <sstream>
 #include <iomanip>
 
-#include "encryptor.h"
-#include "exporter.h"
+#include "../include/data-utils.h"
+#include "../include/encryptor.h"
+#include "../include/exporter.h"
 
 namespace HashOctree {
 
@@ -106,13 +107,13 @@ namespace HashOctree {
 
     std::vector<char> Exporter::toByteArray(const HashOctree &ho) {
         std::vector<char> ret;
-        push_uint64_t(ret, ho.root);
+        DataUtils::push_int<uint64_t>(ret, ho.root);
 
         for (const auto &kv : ho.nodes) {
-            push_uint64_t(ret, kv.first);
-            push_uint64_t(ret, (uint64_t) kv.second.node.data);
+            DataUtils::push_int<uint64_t>(ret, kv.first);
+            DataUtils::push_int<uint64_t>(ret, (uint64_t) kv.second.node.data);
             for (int i = 0; i < 8; i++)
-                push_uint64_t(ret, kv.second.node.children[i]);
+                DataUtils::push_int<uint64_t>(ret, kv.second.node.children[i]);
         }
 
         return ret;

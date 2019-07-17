@@ -20,8 +20,21 @@ namespace HashOctree {
         dim_t halfDim[3];
         dim_t precision[3];
 
+        /// constructor content function
         void init(const dim_t *origin, const dim_t *halfDim, const dim_t *precision);
 
+        /**
+         * Parameters hiding function for addDataPoint.
+         * @param x
+         * @param y
+         * @param z
+         * @param hw
+         * @param hh
+         * @param hd
+         * @param data
+         * @param curr
+         * @return
+         */
         key_t addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
                 const NodeOperationBlock &curr);
 

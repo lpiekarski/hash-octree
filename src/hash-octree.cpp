@@ -2,7 +2,8 @@
 #include <iomanip>
 #include <iostream>
 
-#include "hash-octree.h"
+#include "../include/hash-octree.h"
+#include "../include/encryptor.h"
 
 namespace HashOctree {
 
@@ -113,6 +114,10 @@ namespace HashOctree {
 
         if (this->nodes.count(nkey) != 0) {
             const NodeControlBlock &ncb = this->nodes[nkey];
+
+            if (res != nullptr)
+                (*res) = nkey;
+
             if (ncb.node.data == n.data &&
                 ncb.node.children[0] == n.children[0] &&
                 ncb.node.children[1] == n.children[1] &&
@@ -180,17 +185,17 @@ namespace HashOctree {
     }
 
     status_t HashOctree::addDataPoint(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data) {
-        NodeOperationBlock rootNop;
-        rootNop.parent = nullptr;
-        rootNop.ncb = &this->nodes[this->root];
-        rootNop.origin[0] = this->origin[0];
-        rootNop.origin[1] = this->origin[1];
-        rootNop.origin[2] = this->origin[2];
-        rootNop.halfDim[0] = this->halfDim[0];
-        rootNop.halfDim[1] = this->halfDim[1];
-        rootNop.halfDim[2] = this->halfDim[2];
+        NodeOperationBlock rootNob;
+        rootNob.parent = nullptr;
+        rootNob.ncb = &this->nodes[this->root];
+        rootNob.origin[0] = this->origin[0];
+        rootNob.origin[1] = this->origin[1];
+        rootNob.origin[2] = this->origin[2];
+        rootNob.halfDim[0] = this->halfDim[0];
+        rootNob.halfDim[1] = this->halfDim[1];
+        rootNob.halfDim[2] = this->halfDim[2];
 
-        this->changeRoot(this->addDataPointRec(x, y, z, hw, hh, hd, data, rootNop));
+        this->changeRoot(this->addDataPointRec(x, y, z, hw, hh, hd, data, rootNob));
 
         return OK;
     }
