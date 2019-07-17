@@ -4,14 +4,14 @@ project(hash_octree)
 set(CMAKE_CXX_STANDARD 17)
 
 set(libraries
-        src/defs.h
-        src/data-utils.h
-        src/hash-octree.h
-        src/point-data.h
-        src/importer.h
-        src/encryptor.h
-        src/node.h
-        src/exporter.h)
+        include/defs.h
+        include/data-utils.h
+        include/hash-octree.h
+        include/point-data.h
+        include/importer.h
+        include/encryptor.h
+        include/node.h
+        include/exporter.h)
 
 set(sources
         src/point-data.cpp

@@ -2,8 +2,8 @@
 #include <iomanip>
 #include <iostream>
 
-#include "hash-octree.h"
-#include "encryptor.h"
+#include "../include/hash-octree.h"
+#include "../include/encryptor.h"
 
 namespace HashOctree {
 

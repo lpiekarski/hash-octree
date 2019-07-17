@@ -1,9 +1,9 @@
 #include <sstream>
 #include <iomanip>
 
-#include "data-utils.h"
-#include "encryptor.h"
-#include "exporter.h"
+#include "../include/data-utils.h"
+#include "../include/encryptor.h"
+#include "../include/exporter.h"
 
 namespace HashOctree {
 

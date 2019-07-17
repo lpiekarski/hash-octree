@@ -1,6 +1,6 @@
 #include <cstdlib>
 
-#include "node.h"
+#include "../include/node.h"
 
 namespace HashOctree {
 

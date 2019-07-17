@@ -1,5 +1,5 @@
-#include "importer.h"
-#include "data-utils.h"
+#include "../include/importer.h"
+#include "../include/data-utils.h"
 
 namespace HashOctree {
 
