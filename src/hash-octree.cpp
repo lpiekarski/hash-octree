@@ -217,7 +217,7 @@ namespace HashOctree {
             z - hd <= curr.origin[2] - curr.halfDim[2] &&
             curr.origin[2] + curr.halfDim[2] <= z + hd) {
             key_t key;
-            ret = this->create(data, &key, 0);
+            ret = this->create(data, &key);
             if (out_key != nullptr)
                 (*out_key) = key;
             return ret;
@@ -237,7 +237,7 @@ namespace HashOctree {
             curr.halfDim[1] < this->precision[1] ||
             curr.halfDim[2] < this->precision[2]) {
             key_t key;
-            ret = this->create(data, &key, 0);
+            ret = this->create(data, &key);
             if (out_key != nullptr)
                 (*out_key) = key;
             return ret;
@@ -279,7 +279,7 @@ namespace HashOctree {
         }*/
 
         key_t key;
-        ret = this->create(children, nullptr, &key, 0);
+        ret = this->create(children, nullptr, &key);
         if (out_key != nullptr)
             (*out_key) = key;
         return ret;
