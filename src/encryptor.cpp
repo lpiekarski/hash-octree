@@ -1,6 +1,6 @@
 #include <cstdlib>
 
-#include "encryptor.h"
+#include "../include/encryptor.h"
 
 namespace HashOctree {
 
