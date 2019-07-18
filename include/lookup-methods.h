@@ -2,6 +2,7 @@
 #define HASH_OCTREE_LOOKUP_METHODS_H
 
 #include <unordered_map>
+#include <vector>
 
 #include "node.h"
 
@@ -19,9 +20,9 @@ namespace HashOctree {
 
         virtual void erase(key_t key) = 0;
 
-        virtual void iter(void (*iterFunc)(key_t, const NodeControlBlock &, LookupMethod &)) = 0;
+        virtual std::vector<std::pair<key_t, NodeControlBlock&>> list() = 0;
 
-        virtual void iter(void (*iterFunc)(key_t, NodeControlBlock &, LookupMethod &)) = 0;
+        virtual std::vector<std::pair<key_t, const NodeControlBlock&>> list() const = 0;
     };
 
     class UnorderedMapLookupMethod : LookupMethod {
@@ -39,9 +40,9 @@ namespace HashOctree {
 
         void erase(key_t key);
 
-        void iter(void (*iterFunc)(key_t, const NodeControlBlock &, LookupMethod &));
+        std::vector<std::pair<key_t, NodeControlBlock&>> list();
 
-        void iter(void (*iterFunc)(key_t, NodeControlBlock &, LookupMethod &));
+        std::vector<std::pair<key_t, const NodeControlBlock&>> list() const;
     };
 
 }

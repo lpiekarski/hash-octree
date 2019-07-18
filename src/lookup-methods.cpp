@@ -22,13 +22,22 @@ namespace HashOctree {
         nodes.erase(key);
     }
 
-    void UnorderedMapLookupMethod::iter(void (*iterFunc)(key_t, NodeControlBlock &, LookupMethod &)) {
+    std::vector<std::pair<key_t, NodeControlBlock&>> UnorderedMapLookupMethod::list() {
+        std::vector<std::pair<key_t, NodeControlBlock&>> ret;
+
         for (auto &kv : nodes)
-            iterFunc(kv.first, kv.second, *this);
+            ret.emplace_back(kv.first, kv.second);
+
+        return ret;
     }
 
-    void UnorderedMapLookupMethod::iter(void (*iterFunc)(key_t, const NodeControlBlock &, LookupMethod &)) {
+    std::vector<std::pair<key_t, const NodeControlBlock&>> UnorderedMapLookupMethod::list() const {
+        std::vector<std::pair<key_t, const NodeControlBlock&>> ret;
+
         for (const auto &kv : nodes)
-            iterFunc(kv.first, kv.second, *this);
+            ret.emplace_back(kv.first, kv.second);
+
+        return ret;
     }
+
 }
