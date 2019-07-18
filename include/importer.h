@@ -5,16 +5,17 @@
 #include "point-data.h"
 
 namespace HashOctree {
-
+/*
+    template <typename ILM, typename IE>
     class Importer {
     public:
-        static HashOctree fromByteArray(const std::vector<char> &array);
+        static HashOctree<ILM, IE> fromByteArray(const std::vector<char> &array);
 
-        static HashOctree fromJson(const std::string &str);
+        static HashOctree<ILM, IE> fromJson(const std::string &str);
 
-        static HashOctree fromPointData(const PointData &pdt);
+        static HashOctree<ILM, IE> fromPointData(const PointData &pdt);
     };
-
+*/
 }
 
 #endif //HASH_OCTREE_IMPORTER_H

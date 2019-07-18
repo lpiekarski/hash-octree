@@ -1,17 +1,20 @@
 #include <fstream>
 #include "test.h"
 #include "../include/hash-octree.h"
+#include "../include/exporter.h"
 
 #define TESTS_NUM 3
 
 int test_01() {
     testInfoLog(stdout, "Exporter test");
     HashOctree::HashOctree ho;
-    ho.addDataPoint(3, 3, 3, 1, 1, 1, (void*)123123);
-    std::ofstream p;
-    p.open("octree.json");
+    ho.addDataPoint(10, 3, 23, 4, 5, 7, (void*)123123);
+    ho.addDataPoint(-3, 5, 7, 1, 2, 3, (void*)1233);
+    ho.addDataPoint(2, 5, 3, 10, 3, 3, (void*)555123);
+    //std::ofstream p;
+    //p.open("octree.json");
     //p << HashOctree::Exporter::toJson(ho, 4, true);
-    p.close();
+    //p.close();
     return TEST_SUCCESS;
 }
 
