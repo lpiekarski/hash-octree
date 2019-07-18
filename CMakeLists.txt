@@ -19,7 +19,6 @@ set(sources
         src/encryptor.cpp
         src/node.cpp
         src/importer.cpp
-        src/exporter.cpp
         src/lookup-methods.cpp)
 
 set(test_libraries

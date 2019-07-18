@@ -14,12 +14,8 @@ namespace HashOctree {
             typename E=std::enable_if_t<std::is_base_of_v<LookupMethod, LM>>>
     class HashOctree {
 
-        template <typename ELM=LM,
-                typename EE=E>
         friend class Exporter;
 
-        template <typename ILM=LM,
-                typename IE=E>
         friend class Importer;
     private:
         LM lookupMethod;
@@ -349,14 +345,21 @@ namespace HashOctree {
         }
 
         status_t recountRefs() {
-            lookupMethod.iter([](key_t key, NodeControlBlock &ncb, LookupMethod &lm) { ncb.refs = 0; });
+            auto kvList = lookupMethod.list();
+
+            for (auto &kv : kvList)
+                for (int i = 0; i < 8; i++)
+                    if (!lookupMethod.contains(kv.second.node.children[i]))
+                        return CHILD_DOESNT_EXIST;
+
+            for (auto &kv : kvList)
+                kv.second.refs = 0;
 
             lookupMethod.lookup(this->root).refs++;
 
-            lookupMethod.iter([](key_t key, NodeControlBlock &ncb, LookupMethod &lm) {
+            for (auto &kv : kvList)
                 for (int i = 0; i < 8; i++)
-                    lm.lookup(ncb.node.children[i]).refs++;
-            });
+                    lookupMethod.lookup(kv.second.node.children[i]).refs++;
 
             return OK;
         }
