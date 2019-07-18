@@ -5,7 +5,7 @@
 #include <type_traits>
 
 #include "node.h"
-#include "lookup-methods.h"
+#include "unordered-map-lookup-method.h"
 #include "encryptor.h"
 
 namespace HashOctree {
