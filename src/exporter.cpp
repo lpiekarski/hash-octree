@@ -6,17 +6,21 @@
 #include "../include/exporter.h"
 
 namespace HashOctree {
-
-    std::string Exporter::toString(const HashOctree &ho) {
+/*
+    template <typename ELM, typename EE>
+    std::string Exporter<ELM, EE>::toString(const HashOctree<ELM, EE> &ho) {
         std::stringstream ss("");
         ss.fill('0');
         ss << "root: " << std::setw(16) << std::hex << ho.root << "\n";
-        for (const auto &kv : ho.nodes) {
+        ho.lookupMethod.iter([](key_t key, const NodeControlBlock &ncb, LookupMethod &lm) {
             ss << std::setw(16) << std::hex << kv.first << ": ";
             ss << "data: " << std::setw(16) << std::hex << (uint64_t)kv.second.node.data << ", children: ";
             for (size_t i = 0; i < 8; i++)
                 ss << std::setw(16) << std::hex << kv.second.node.children[i] << " ";
             ss << "(" << std::dec << kv.second.refs << " ref(s))\n";
+        });
+        for (const auto &kv : ho.nodes) {
+
         }
 
         return ss.str();
@@ -118,5 +122,5 @@ namespace HashOctree {
 
         return ret;
     }
-
+*/
 }

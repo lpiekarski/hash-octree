@@ -11,15 +11,16 @@ set(libraries
         include/importer.h
         include/encryptor.h
         include/node.h
-        include/exporter.h)
+        include/exporter.h
+        include/lookup-methods.h)
 
 set(sources
         src/point-data.cpp
         src/encryptor.cpp
         src/node.cpp
-        src/hash-octree.cpp
         src/importer.cpp
-        src/exporter.cpp)
+        src/exporter.cpp
+        src/lookup-methods.cpp)
 
 set(test_libraries
         tests/test.h)

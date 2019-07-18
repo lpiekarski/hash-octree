@@ -2,9 +2,10 @@
 #include "../include/data-utils.h"
 
 namespace HashOctree {
-
-    HashOctree Importer::fromByteArray(const std::vector<char> &array) {
-        HashOctree ret;
+/*
+    template <typename ILM, typename IE>
+    HashOctree<ILM, IE> Importer<ILM, IE>::fromByteArray(const std::vector<char> &array) {
+        HashOctree<ILM, IE> ret;
         size_t read_id = 0;
         DataUtils::read_int<uint64_t>(array, read_id, ret.root);
         read_id += 8;
@@ -21,10 +22,10 @@ namespace HashOctree {
                 DataUtils::read_int<uint64_t>(array, read_id, children[i]);
                 read_id += 8;
             }
-            ret.nodes[key].key = key;
-            ret.nodes[key].node.data = (void *) data;
+            ret.lookupMethod.lookup(key).key = key;
+            ret.lookupMethod.lookup(key).node.data = (void *) data;
             for (int i = 0; i < 8; i++)
-                ret.nodes[key].node.children[i] = children[i];
+                ret.lookupMethod.lookup(key).node.children[i] = children[i];
         }
 
         ret.recountRefs();
@@ -32,16 +33,18 @@ namespace HashOctree {
         return ret;
     }
 
-    HashOctree Importer::fromJson(const std::string &str) {
-        HashOctree ret;
+    template <typename ILM, typename IE>
+    HashOctree<ILM, IE> Importer<ILM, IE>::fromJson(const std::string &str) {
+        HashOctree<ILM, IE> ret;
 
         return ret;
     }
 
-    HashOctree Importer::fromPointData(const PointData &pdt) {
-        HashOctree ret;
+    template <typename ILM, typename IE>
+    HashOctree<ILM, IE> Importer<ILM, IE>::fromPointData(const PointData &pdt) {
+        HashOctree<ILM, IE> ret;
 
         return ret;
     }
-
+*/
 }
