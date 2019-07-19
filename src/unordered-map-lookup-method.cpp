@@ -1,4 +1,4 @@
-#include "../include/lookup-methods.h"
+#include "../include/unordered-map-lookup-method.h"
 
 namespace HashOctree {
 

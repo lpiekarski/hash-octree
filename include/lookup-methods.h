@@ -25,26 +25,6 @@ namespace HashOctree {
         virtual std::vector<std::pair<key_t, const NodeControlBlock&>> list() const = 0;
     };
 
-    class UnorderedMapLookupMethod : LookupMethod {
-    private:
-        std::unordered_map<key_t, NodeControlBlock> nodes;
-
-    public:
-        NodeControlBlock &lookup(key_t key);
-
-        const NodeControlBlock &lookup(key_t key) const;
-
-        bool contains(key_t key);
-
-        void insert(key_t key, const NodeControlBlock &ncb);
-
-        void erase(key_t key);
-
-        std::vector<std::pair<key_t, NodeControlBlock&>> list();
-
-        std::vector<std::pair<key_t, const NodeControlBlock&>> list() const;
-    };
-
 }
 
 #endif //HASH_OCTREE_LOOKUP_METHODS_H

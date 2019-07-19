@@ -7,5 +7,6 @@
 #include "importer.h"
 #include "point-data.h"
 #include "encryptor.h"
+#include "lookup-methods.h"
 
 #endif //HASH_OCTREE_HASHOCTREE_H

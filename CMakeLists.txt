@@ -12,14 +12,14 @@ set(libraries
         include/encryptor.h
         include/node.h
         include/exporter.h
-        include/lookup-methods.h)
+        include/lookup-methods.h
+        include/unordered-map-lookup-method.h)
 
 set(sources
         src/point-data.cpp
         src/encryptor.cpp
         src/node.cpp
-        src/importer.cpp
-        src/lookup-methods.cpp)
+        src/unordered-map-lookup-method.cpp)
 
 set(test_libraries
         tests/test.h)
