@@ -57,12 +57,7 @@ namespace HashOctree {
             key_t cleanupKey = 0;
 
             // if data point fully contains node dont split
-            if (dims.origin[0] - dims.halfDim[0] <= curr.dim.origin[0] - curr.dim.halfDim[0] &&
-                curr.dim.origin[0] + curr.dim.halfDim[0] <= dims.origin[0] + dims.halfDim[0] &&
-                dims.origin[1] - dims.halfDim[1] <= curr.dim.origin[1] - curr.dim.halfDim[1] &&
-                curr.dim.origin[1] + curr.dim.halfDim[1] <= dims.origin[1] + dims.halfDim[1] &&
-                dims.origin[2] - dims.halfDim[2] <= curr.dim.origin[2] - curr.dim.halfDim[2] &&
-                curr.dim.origin[2] + curr.dim.halfDim[2] <= dims.origin[2] + dims.halfDim[2]) {
+            if (dims.contains(curr.dim)) {
                 key_t key;
                 ret = this->create(data, &key);
                 if (out_key != nullptr)
@@ -71,12 +66,7 @@ namespace HashOctree {
             }
 
             // if data point doesnt have any intersection with node dont do anything
-            if ((dims.origin[0] + dims.halfDim[0] <= curr.dim.origin[0] - curr.dim.halfDim[0] ||
-                curr.dim.origin[0] + curr.dim.halfDim[0] <= dims.origin[0] - dims.halfDim[0]) ||
-                (dims.origin[1] + dims.halfDim[1] <= curr.dim.origin[1] - curr.dim.halfDim[1] ||
-                curr.dim.origin[1] + curr.dim.halfDim[1] <= dims.origin[1] - dims.halfDim[1]) ||
-                (dims.origin[2] + dims.halfDim[2] <= curr.dim.origin[2] - curr.dim.halfDim[2] ||
-                curr.dim.origin[2] + curr.dim.halfDim[2] <= dims.origin[2] - dims.halfDim[2])) {
+            if (!dims.intersects(curr.dim)) {
                 if (out_key != nullptr)
                     (*out_key) = curr.ncb->key;
                 return ret;
@@ -117,15 +107,7 @@ namespace HashOctree {
             // add data point recursively
             key_t children[8];
             for (int i = 0; i < 8; i++) {
-                NodeOperationBlock childNob;
-                childNob.ncb = &lookupMethod.lookup(curr.ncb->node.children[i]);
-                childNob.parent = curr.ncb;
-                childNob.dim.halfDim[0] = curr.dim.halfDim[0] * 0.5;
-                childNob.dim.halfDim[1] = curr.dim.halfDim[1] * 0.5;
-                childNob.dim.halfDim[2] = curr.dim.halfDim[2] * 0.5;
-                childNob.dim.origin[0] = curr.dim.origin[0] + (2 * (i % 2) - 1) * childNob.dim.halfDim[0];
-                childNob.dim.origin[1] = curr.dim.origin[1] + (2 * ((i / 2) % 2) - 1) * childNob.dim.halfDim[1];
-                childNob.dim.origin[2] = curr.dim.origin[2] + (2 * (i / 4) - 1) * childNob.dim.halfDim[2];
+                NodeOperationBlock childNob = curr.getChildNOB<LM>(i, lookupMethod);
                 status_t childStatus = this->addDataPointRec(dims, data, childNob, &children[i]);
 
                 if (childStatus != OK && childStatus != NODE_EXISTS) {
