@@ -4,6 +4,16 @@
 
 namespace HashOctree {
 
+    NodeDims::NodeDims(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd) {
+        origin[0] = x;
+        origin[1] = y;
+        origin[2] = z;
+
+        halfDim[0] = hw;
+        halfDim[1] = hh;
+        halfDim[2] = hd;
+    }
+
     Node::Node(const key_t *children, const void *data) {
         this->data = (void *)data;
         for (size_t i = 0; i < 8; i++)

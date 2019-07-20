@@ -10,8 +10,8 @@ namespace HashOctree {
             //push_int(v, ())
             //os.write()
         } else {
-            os << p.origin[0] << " " << p.origin[1] << " " << p.origin[2] << " ";
-            os << p.halfDim[0] << " " << p.halfDim[1] << " " << p.halfDim[2] << " ";
+            os << p.dim.origin[0] << " " << p.dim.origin[1] << " " << p.dim.origin[2] << " ";
+            os << p.dim.halfDim[0] << " " << p.dim.halfDim[1] << " " << p.dim.halfDim[2] << " ";
             os << (uint64_t) p.data;
         }
 

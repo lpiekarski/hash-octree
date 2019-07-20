@@ -5,6 +5,20 @@
 
 namespace HashOctree {
 
+    class NodeDims {
+    public:
+        dim_t origin[3];
+        dim_t halfDim[3];
+
+        NodeDims() = default;
+
+        NodeDims(const NodeDims &) = default;
+
+        NodeDims &operator=(const NodeDims &) = default;
+
+        NodeDims(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd);
+    };
+
     class Node {
     public:
         key_t children[8];
@@ -34,8 +48,7 @@ namespace HashOctree {
     class NodeOperationBlock {
     public:
         NodeControlBlock *ncb;
-        dim_t origin[3];
-        dim_t halfDim[3];
+        NodeDims dim;
         NodeControlBlock *parent;
     };
 

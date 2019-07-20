@@ -9,9 +9,9 @@
 int test_01() {
     testInfoLog(stdout, "Exporter test");
     HashOctree::HashOctree ho;
-    ho.addDataPoint(10, 3, 23, 4, 5, 7, (void*)123123);
-    ho.addDataPoint(-3, 5, 7, 1, 2, 3, (void*)1233);
-    ho.addDataPoint(2, 5, 3, 10, 3, 3, (void*)555123);
+    ho.addDataPoint(HashOctree::NodeDims(10, 3, 23, 4, 5, 7), (void*)123123);
+    ho.addDataPoint(HashOctree::NodeDims(-3, 5, 7, 1, 2, 3), (void*)1233);
+    ho.addDataPoint(HashOctree::NodeDims(2, 5, 3, 10, 3, 3), (void*)555123);
     std::ofstream p;
     p.open("octree.json");
     p << HashOctree::Exporter::toJson(ho, 4, true);
@@ -27,7 +27,7 @@ int test_02() {
 int test_03() {
     testInfoLog(stdout, "HashOctree::addDataPoint test");
     HashOctree::HashOctree ho;
-    assertNoException(ho.addDataPoint(10, 10, 10, 1, 1, 1, (void*)5));
+    assertNoException(ho.addDataPoint(HashOctree::NodeDims(10, 10, 10, 1, 1, 1), (void*)5));
     return TEST_SUCCESS;
 }
 

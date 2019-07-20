@@ -10,8 +10,7 @@ namespace HashOctree {
 
     class Point {
     public:
-        dim_t origin[3];
-        dim_t halfDim[3];
+        NodeDims dim;
         void *data;
 
         friend std::istream& operator>>(std::istream &is, const Point &p);
