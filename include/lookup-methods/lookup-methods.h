@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "node.h"
+#include "../node.h"
 
 namespace HashOctree {
 

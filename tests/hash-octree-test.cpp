@@ -2,7 +2,7 @@
 #include "test.h"
 #include "../include/hash-octree.h"
 #include "../include/exporter.h"
-#include "../include/lookup-methods.h"
+#include "../include/lookup-methods/lookup-methods.h"
 
 #define TESTS_NUM 3
 
