@@ -14,6 +14,24 @@ namespace HashOctree {
         halfDim[2] = hd;
     }
 
+    bool NodeDims::contains(const NodeDims &dims) const {
+        return origin[0] - halfDim[0] <= dims.origin[0] - dims.halfDim[0] &&
+        dims.origin[0] + dims.halfDim[0] <= origin[0] + halfDim[0] &&
+        origin[1] - halfDim[1] <= dims.origin[1] - dims.halfDim[1] &&
+        dims.origin[1] + dims.halfDim[1] <= origin[1] + halfDim[1] &&
+        origin[2] - halfDim[2] <= dims.origin[2] - dims.halfDim[2] &&
+        dims.origin[2] + dims.halfDim[2] <= origin[2] + halfDim[2];
+    }
+
+    bool NodeDims::intersects(const NodeDims &dims) const {
+        return !((dims.origin[0] + dims.halfDim[0] <= origin[0] - halfDim[0] ||
+         origin[0] + halfDim[0] <= dims.origin[0] - dims.halfDim[0]) ||
+        (dims.origin[1] + dims.halfDim[1] <= origin[1] - halfDim[1] ||
+         origin[1] + halfDim[1] <= dims.origin[1] - dims.halfDim[1]) ||
+        (dims.origin[2] + dims.halfDim[2] <= origin[2] - halfDim[2] ||
+         origin[2] + halfDim[2] <= dims.origin[2] - dims.halfDim[2]));
+    }
+
     Node::Node(const key_t *children, const void *data) {
         this->data = (void *)data;
         for (size_t i = 0; i < 8; i++)
