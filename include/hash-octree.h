@@ -13,26 +13,17 @@ namespace HashOctree {
     template <typename LM=UnorderedMapLookupMethod,
             typename E=std::enable_if_t<std::is_base_of_v<LookupMethod, LM>>>
     class HashOctree {
-
         friend class Exporter;
-
         friend class Importer;
     private:
         LM lookupMethod;
         key_t root;
-        dim_t origin[3];
-        dim_t halfDim[3];
+        NodeDims dim;
         dim_t precision[3];
 
         /// constructor content function
-        void init(const dim_t *origin, const dim_t *halfDim, const dim_t *precision) {
-            this->origin[0] = origin[0];
-            this->origin[1] = origin[1];
-            this->origin[2] = origin[2];
-
-            this->halfDim[0] = halfDim[0];
-            this->halfDim[1] = halfDim[1];
-            this->halfDim[2] = halfDim[2];
+        void init(const NodeDims &dim, const dim_t *precision) {
+            this->dim = dim;
 
             this->precision[0] = precision[0];
             this->precision[1] = precision[1];
@@ -60,18 +51,18 @@ namespace HashOctree {
          * @param curr
          * @return
          */
-        status_t addDataPointRec(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data,
+        status_t addDataPointRec(const NodeDims &dims, void *data,
                 NodeOperationBlock &curr, key_t *out_key) {
             status_t ret = OK;
             key_t cleanupKey = 0;
 
             // if data point fully contains node dont split
-            if (x - hw <= curr.origin[0] - curr.halfDim[0] &&
-                curr.origin[0] + curr.halfDim[0] <= x + hw &&
-                y - hh <= curr.origin[1] - curr.halfDim[1] &&
-                curr.origin[1] + curr.halfDim[1] <= y + hh &&
-                z - hd <= curr.origin[2] - curr.halfDim[2] &&
-                curr.origin[2] + curr.halfDim[2] <= z + hd) {
+            if (dims.origin[0] - dims.halfDim[0] <= curr.dim.origin[0] - curr.dim.halfDim[0] &&
+                curr.dim.origin[0] + curr.dim.halfDim[0] <= dims.origin[0] + dims.halfDim[0] &&
+                dims.origin[1] - dims.halfDim[1] <= curr.dim.origin[1] - curr.dim.halfDim[1] &&
+                curr.dim.origin[1] + curr.dim.halfDim[1] <= dims.origin[1] + dims.halfDim[1] &&
+                dims.origin[2] - dims.halfDim[2] <= curr.dim.origin[2] - curr.dim.halfDim[2] &&
+                curr.dim.origin[2] + curr.dim.halfDim[2] <= dims.origin[2] + dims.halfDim[2]) {
                 key_t key;
                 ret = this->create(data, &key);
                 if (out_key != nullptr)
@@ -80,18 +71,21 @@ namespace HashOctree {
             }
 
             // if data point doesnt have any intersection with node dont do anything
-            if ((x + hw <= curr.origin[0] - curr.halfDim[0] || curr.origin[0] + curr.halfDim[0] <= x - hw) ||
-                (y + hh <= curr.origin[1] - curr.halfDim[1] || curr.origin[1] + curr.halfDim[1] <= y - hh) ||
-                (z + hd <= curr.origin[2] - curr.halfDim[2] || curr.origin[2] + curr.halfDim[2] <= z - hd)) {
+            if ((dims.origin[0] + dims.halfDim[0] <= curr.dim.origin[0] - curr.dim.halfDim[0] ||
+                curr.dim.origin[0] + curr.dim.halfDim[0] <= dims.origin[0] - dims.halfDim[0]) ||
+                (dims.origin[1] + dims.halfDim[1] <= curr.dim.origin[1] - curr.dim.halfDim[1] ||
+                curr.dim.origin[1] + curr.dim.halfDim[1] <= dims.origin[1] - dims.halfDim[1]) ||
+                (dims.origin[2] + dims.halfDim[2] <= curr.dim.origin[2] - curr.dim.halfDim[2] ||
+                curr.dim.origin[2] + curr.dim.halfDim[2] <= dims.origin[2] - dims.halfDim[2])) {
                 if (out_key != nullptr)
                     (*out_key) = curr.ncb->key;
                 return ret;
             }
 
             // precision bailout
-            if (curr.halfDim[0] < this->precision[0] ||
-                curr.halfDim[1] < this->precision[1] ||
-                curr.halfDim[2] < this->precision[2]) {
+            if (curr.dim.halfDim[0] < this->precision[0] ||
+                curr.dim.halfDim[1] < this->precision[1] ||
+                curr.dim.halfDim[2] < this->precision[2]) {
                 key_t key;
                 ret = this->create(data, &key);
                 if (out_key != nullptr)
@@ -126,13 +120,13 @@ namespace HashOctree {
                 NodeOperationBlock childNob;
                 childNob.ncb = &lookupMethod.lookup(curr.ncb->node.children[i]);
                 childNob.parent = curr.ncb;
-                childNob.halfDim[0] = curr.halfDim[0] * 0.5;
-                childNob.halfDim[1] = curr.halfDim[1] * 0.5;
-                childNob.halfDim[2] = curr.halfDim[2] * 0.5;
-                childNob.origin[0] = curr.origin[0] + (2 * (i % 2) - 1) * childNob.halfDim[0];
-                childNob.origin[1] = curr.origin[1] + (2 * ((i / 2) % 2) - 1) * childNob.halfDim[1];
-                childNob.origin[2] = curr.origin[2] + (2 * (i / 4) - 1) * childNob.halfDim[2];
-                status_t childStatus = this->addDataPointRec(x, y, z, hw, hh, hd, data, childNob, &children[i]);
+                childNob.dim.halfDim[0] = curr.dim.halfDim[0] * 0.5;
+                childNob.dim.halfDim[1] = curr.dim.halfDim[1] * 0.5;
+                childNob.dim.halfDim[2] = curr.dim.halfDim[2] * 0.5;
+                childNob.dim.origin[0] = curr.dim.origin[0] + (2 * (i % 2) - 1) * childNob.dim.halfDim[0];
+                childNob.dim.origin[1] = curr.dim.origin[1] + (2 * ((i / 2) % 2) - 1) * childNob.dim.halfDim[1];
+                childNob.dim.origin[2] = curr.dim.origin[2] + (2 * (i / 4) - 1) * childNob.dim.halfDim[2];
+                status_t childStatus = this->addDataPointRec(dims, data, childNob, &children[i]);
 
                 if (childStatus != OK && childStatus != NODE_EXISTS) {
                     ret = childStatus;
@@ -172,41 +166,30 @@ namespace HashOctree {
 
     public:
         HashOctree() {
-            dim_t def_origin[3];
-            dim_t def_halfDim[3];
             dim_t def_precision[3];
-
-            def_origin[0] = 0;
-            def_origin[1] = 0;
-            def_origin[2] = 0;
-
-            def_halfDim[0] = 32;
-            def_halfDim[1] = 32;
-            def_halfDim[2] = 32;
-
 
             def_precision[0] = 0.5;
             def_precision[1] = 0.5;
             def_precision[2] = 0.5;
 
-            this->init(def_origin, def_halfDim, def_precision);
+            this->init(NodeDims(0, 0, 0, 32, 32, 32), def_precision);
         }
 
-        HashOctree(const dim_t *origin, const dim_t *halfDim, const dim_t *precision) {
-            this->init(origin, halfDim, precision);
+        HashOctree(const NodeDims &dim, const dim_t *precision) {
+            this->init(dim, precision);
         }
 
-        dim_t getX() const { return this->origin[0]; }
+        dim_t getX() const { return this->dim.origin[0]; }
 
-        dim_t getY() const { return this->origin[1]; }
+        dim_t getY() const { return this->dim.origin[1]; }
 
-        dim_t getZ() const { return this->origin[2]; }
+        dim_t getZ() const { return this->dim.origin[2]; }
 
-        dim_t getHalfWidth() const { return this->halfDim[0]; }
+        dim_t getHalfWidth() const { return this->dim.halfDim[0]; }
 
-        dim_t getHalfHeight() const { return this->halfDim[1]; }
+        dim_t getHalfHeight() const { return this->dim.halfDim[1]; }
 
-        dim_t getHalfDepth() const { return this->halfDim[2]; }
+        dim_t getHalfDepth() const { return this->dim.halfDim[2]; }
 
         status_t remove(const NodeControlBlock &ncb, int flags=0) {
             if (!lookupMethod.contains(ncb.key))
@@ -323,19 +306,14 @@ namespace HashOctree {
             return OK;
         }
 
-        status_t addDataPoint(dim_t x, dim_t y, dim_t z, dim_t hw, dim_t hh, dim_t hd, void *data) {
+        status_t addDataPoint(const NodeDims &dims, void *data) {
             NodeOperationBlock rootNob;
             rootNob.parent = nullptr;
             rootNob.ncb = &lookupMethod.lookup(this->root);
-            rootNob.origin[0] = this->origin[0];
-            rootNob.origin[1] = this->origin[1];
-            rootNob.origin[2] = this->origin[2];
-            rootNob.halfDim[0] = this->halfDim[0];
-            rootNob.halfDim[1] = this->halfDim[1];
-            rootNob.halfDim[2] = this->halfDim[2];
+            rootNob.dim = this->dim;
 
             key_t newRoot;
-            status_t status = this->addDataPointRec(x, y, z, hw, hh, hd, data, rootNob, &newRoot);
+            status_t status = this->addDataPointRec(dims, data, rootNob, &newRoot);
 
             if (status != OK && status != NODE_EXISTS)
                 return status;
