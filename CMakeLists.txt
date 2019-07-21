@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.9)
 project(hash_octree)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -24,10 +24,12 @@ set(sources
 set(test_libraries
         tests/test.h)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 # test executables
 add_executable(hash_octree_test ${libraries} ${sources} tests/hash-octree-test.cpp)
-
-add_executable(point_data_test ${libraries} ${sources} tests/point-data-test.cpp)
+target_link_libraries(hash_octree_test Threads::Threads)
 
 # library
 add_library(hash-octree ${libraries} ${sources})

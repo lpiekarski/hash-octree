@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <type_traits>
+#include <functional>
 
 #include "node.h"
 #include "lookup-methods/unordered-map-lookup-method.h"
@@ -11,7 +12,7 @@
 namespace HashOctree {
 
     template <typename LM=UnorderedMapLookupMethod,
-            typename E=std::enable_if_t<std::is_base_of_v<LookupMethod, LM>>>
+            typename = typename std::enable_if<std::is_base_of<LookupMethod, LM>::value>::type>
     class HashOctree {
         friend class Exporter;
         friend class Importer;
@@ -39,34 +40,22 @@ namespace HashOctree {
             this->root = 0;
         }
 
-        /**
-         * Parameters hiding function for addDataPoint.
-         * @param x
-         * @param y
-         * @param z
-         * @param hw
-         * @param hh
-         * @param hd
-         * @param data
-         * @param curr
-         * @return
-         */
-        status_t addDataPointRec(const NodeDims &dims, void *data,
-                NodeOperationBlock &curr, key_t *out_key) {
+        status_t addDataShapeRec(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<void*(const NodeDims &dims)> dataFunc,
+                                 NodeOperationBlock &curr, key_t *out_key) {
             status_t ret = OK;
             key_t cleanupKey = 0;
 
             // if data point fully contains node dont split
-            if (dims.contains(curr.dim)) {
+            if (contains(curr.dim)) {
                 key_t key;
-                ret = this->create(data, &key);
+                ret = this->create(dataFunc(curr.dim), &key);
                 if (out_key != nullptr)
                     (*out_key) = key;
                 return ret;
             }
 
             // if data point doesnt have any intersection with node dont do anything
-            if (!dims.intersects(curr.dim)) {
+            if (!intersects(curr.dim)) {
                 if (out_key != nullptr)
                     (*out_key) = curr.ncb->key;
                 return ret;
@@ -77,7 +66,7 @@ namespace HashOctree {
                 curr.dim.halfDim[1] < this->precision[1] ||
                 curr.dim.halfDim[2] < this->precision[2]) {
                 key_t key;
-                ret = this->create(data, &key);
+                ret = this->create(dataFunc(curr.dim), &key);
                 if (out_key != nullptr)
                     (*out_key) = key;
                 return ret;
@@ -108,7 +97,7 @@ namespace HashOctree {
             key_t children[8];
             for (int i = 0; i < 8; i++) {
                 NodeOperationBlock childNob = curr.getChildNOB<LM>(i, lookupMethod);
-                status_t childStatus = this->addDataPointRec(dims, data, childNob, &children[i]);
+                status_t childStatus = this->addDataShapeRec(intersects, contains, dataFunc, childNob, &children[i]);
 
                 if (childStatus != OK && childStatus != NODE_EXISTS) {
                     ret = childStatus;
@@ -295,7 +284,12 @@ namespace HashOctree {
             rootNob.dim = this->dim;
 
             key_t newRoot;
-            status_t status = this->addDataPointRec(dims, data, rootNob, &newRoot);
+
+            auto intersects = [&dims](const NodeDims &x) { return dims.intersects(x); };
+            auto contains = [&dims](const NodeDims &x) { return dims.contains(x); };
+            auto dataFunc = [data](const NodeDims &x) { return data; };
+
+            status_t status = this->addDataShapeRec(intersects, contains, dataFunc, rootNob, &newRoot);
 
             if (status != OK && status != NODE_EXISTS)
                 return status;
@@ -323,6 +317,24 @@ namespace HashOctree {
 
             return OK;
         }
+
+        status_t addDataShape(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<void*(const NodeDims &dims)> dataFunc) {
+            NodeOperationBlock rootNob;
+            rootNob.parent = nullptr;
+            rootNob.ncb = &lookupMethod.lookup(this->root);
+            rootNob.dim = this->dim;
+
+            key_t newRoot;
+
+            status_t status = this->addDataShapeRec(intersects, contains, dataFunc, rootNob, &newRoot);
+
+            if (status != OK && status != NODE_EXISTS)
+                return status;
+
+            this->changeRoot(newRoot);
+            return status;
+        }
+
     };
 
 }

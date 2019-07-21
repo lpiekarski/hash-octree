@@ -2,11 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script type="text/javascript" src="scripts/visualizer.js"></script>
     <title>HashOctree Visualizer</title>
 </head>
-<body>
-    <input id="octree-file" type="file"/>
-    <canvas id="canvas"></canvas>
-    <script type="text/javascript" src="scripts/visualizer.js"></script>
+<body style="display: flex">
+    <div id="commit-file-div">
+        <input id="octree-file" type="file"/>
+    </div>
+    <div id="canvas-div">
+        <canvas id="canvas" style="border:1px solid #000000;"></canvas>
+    </div>
+    <div id="explorer-div">
+        <table>
+            <tr>
+                <td>parent:</td>
+                <td id="parent-node" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>node:</td>
+                <td id="current-node" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>position:</td>
+                <td id="position"></td>
+            </tr>
+            <tr>
+                <td>dimensions:</td>
+                <td id="dimensions"></td>
+            </tr>
+            <tr>
+                <td>child0:</td>
+                <td id="child0" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child1:</td>
+                <td id="child1" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child2:</td>
+                <td id="child2" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child3:</td>
+                <td id="child3" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child4:</td>
+                <td id="child4" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child5:</td>
+                <td id="child5" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child6:</td>
+                <td id="child6" style="cursor: pointer;"></td>
+            </tr>
+            <tr>
+                <td>child7:</td>
+                <td id="child7" style="cursor: pointer;"></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
