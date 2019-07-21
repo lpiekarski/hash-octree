@@ -6,7 +6,6 @@ branches:
 compiler:
   - gcc
   - clang
-install: make cmake
 os:
   - linux
   - osx
