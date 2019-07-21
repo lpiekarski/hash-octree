@@ -8,7 +8,6 @@
 * [Usage](#usage)
 * [How does it work](#how-does-it-work)
 * [Release notes](#release-notes)
-* [Credits](#credits)
 * [License](#license)
 
 # Installation
@@ -38,8 +37,5 @@
 ### *Release name*
 *Release notes*
 
-# Credits
-*credits*
-
 # License
-*license file link*
+If you plan to use this library make sure you're familiar with its [license](LICENSE) terms.

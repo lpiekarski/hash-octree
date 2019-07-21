@@ -37,14 +37,4 @@ int (*tests[TESTS_NUM])(void) = {
         test_03,
 };
 
-int main() {
-    int ret = 0;
-
-    for (auto test_func : tests) {
-        testStatusLog(stdout, test_func);
-        if (__result != TEST_SUCCESS)
-            ret = 1;
-    }
-
-    return ret;
-}
+TEST_MAIN
