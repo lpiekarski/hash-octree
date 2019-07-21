@@ -24,8 +24,12 @@ set(sources
 set(test_libraries
         tests/test.h)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 # test executables
 add_executable(hash_octree_test ${libraries} ${sources} tests/hash-octree-test.cpp)
+target_link_libraries(hash_octree_test Threads::Threads)
 
 # library
 add_library(hash-octree ${libraries} ${sources})
