@@ -1,0 +1,14 @@
+language: c++
+branches:
+  only:
+    - master
+    - dev
+compiler:
+  - gcc
+  - clang
+install: make cmake
+os:
+  - linux
+  - osx
+  - windows
+script: cmake . && make && ./hash_octree_test
