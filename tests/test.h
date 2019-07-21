@@ -67,7 +67,7 @@ const char *test_result[] = {
         testContext = __func__;\
     }
 
-#define testStatusLog(stream, func) {\
+#define testStatusLog(stream, func) \
         auto __future = std::async(std::launch::async, (func));\
         size_t __result;\
         if (__future.wait_for(std::chrono::seconds(TIMEOUT_SECONDS)) != std::future_status::ready)\
@@ -75,6 +75,6 @@ const char *test_result[] = {
         else\
             __result = __future.get();\
         fprintf((stream), "\t%s test result: %s\n\n",  testContext.c_str(), test_result[__result]);\
-    }
+
 
 #endif // __TEST_H__

@@ -38,7 +38,13 @@ int (*tests[TESTS_NUM])(void) = {
 };
 
 int main() {
-    for (auto test_func : tests)
+    int ret = 0;
+
+    for (auto test_func : tests) {
         testStatusLog(stdout, test_func);
-    return 0;
+        if (__result != TEST_SUCCESS)
+            ret = 1;
+    }
+
+    return ret;
 }
