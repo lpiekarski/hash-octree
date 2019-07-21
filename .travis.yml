@@ -9,5 +9,4 @@ compiler:
 os:
   - linux
   - osx
-  - windows
 script: cmake . && make && ./hash_octree_test
