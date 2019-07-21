@@ -12,7 +12,7 @@
 namespace HashOctree {
 
     template <typename LM=UnorderedMapLookupMethod,
-            typename E=std::enable_if_t<std::is_base_of_v<LookupMethod, LM>>>
+            typename = typename std::enable_if<std::is_base_of<LookupMethod, LM>::value>::type>
     class HashOctree {
         friend class Exporter;
         friend class Importer;

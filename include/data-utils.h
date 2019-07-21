@@ -11,7 +11,7 @@ namespace HashOctree {
     class DataUtils {
     public:
         template <typename T,
-                typename = std::enable_if_t<std::is_integral_v<T>>>
+                typename = typename std::enable_if<std::is_integral<T>::value>::type>
         static int read_int(const std::vector<char> &v, size_t pos, T &ret) {
             size_t bytes = sizeof(T);
             ret = 0;
@@ -25,7 +25,7 @@ namespace HashOctree {
         }
 
         template <typename T,
-                typename = std::enable_if_t<std::is_integral_v<T>>>
+                typename = typename std::enable_if<std::is_integral<T>::value>::type>
         static int push_int(std::vector<char> &v, T val) {
             size_t bytes = sizeof(T);
 
