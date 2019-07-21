@@ -1,4 +1,6 @@
-# HashOctree library [![Build Status](https://travis-ci.com/lpiekarski/hash-octree.svg?branch=dev)](https://travis-ci.com/lpiekarski/hash-octree)
+# HashOctree library
+[![Build Status](https://travis-ci.com/lpiekarski/hash-octree.svg?branch=master)](https://travis-ci.com/lpiekarski/hash-octree)
+
 *Description*
 
 # *Table of Contents*
