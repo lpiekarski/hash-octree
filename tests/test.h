@@ -76,5 +76,17 @@ const char *test_result[] = {
             __result = __future.get();\
         fprintf((stream), "\t%s test result: %s\n\n",  testContext.c_str(), test_result[__result]);\
 
+#define TEST_MAIN \
+int main() {\
+    int ret = 0;\
+\
+    for (auto test_func : tests) {\
+        testStatusLog(stdout, test_func);\
+        if (__result != TEST_SUCCESS)\
+            ret = 1;\
+    }\
+\
+    return ret;\
+}\
 
 #endif // __TEST_H__
