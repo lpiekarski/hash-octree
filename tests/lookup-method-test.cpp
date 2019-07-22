@@ -4,6 +4,7 @@
 #include "test.h"
 #include "../include/lookup-methods/lookup-methods.h"
 #include "../include/lookup-methods/unordered-map-lookup-method.h"
+#include "../include/lookup-methods/map-lookup-method.h"
 
 #define TESTS_NUM 4
 
@@ -19,6 +20,7 @@ void setup_lms() {
     if (!lms.empty())
         clear_lms();
     lms.emplace_back(new HashOctree::UnorderedMapLookupMethod());
+    lms.emplace_back(new HashOctree::MapLookupMethod());
 }
 
 int test_01() {
