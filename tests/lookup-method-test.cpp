@@ -9,18 +9,23 @@
 #define TESTS_NUM 4
 
 std::vector<HashOctree::LookupMethod *> lms;
+std::vector<std::string> labels;
 
 void clear_lms() {
     for (const auto &lm : lms)
         delete lm;
     lms.clear();
+    labels.clear();
 }
 
 void setup_lms() {
     if (!lms.empty())
         clear_lms();
     lms.emplace_back(new HashOctree::UnorderedMapLookupMethod());
+    labels.emplace_back("UnorderedMapLookupMethod");
+
     lms.emplace_back(new HashOctree::MapLookupMethod());
+    labels.emplace_back("MapLookupMethod");
 }
 
 int test_01() {
@@ -45,23 +50,23 @@ int test_02() {
     };
 
     for (const auto &key : testKeys) {
-        for (auto &lm : lms) {
-            testInfoLog(stdout, (std::string(typeid(lm).name()) + ".contains() test").c_str());
-            assert(!lm->contains(key));
+        for (int i = 0; i < lms.size(); i++) {
+            testInfoLog(stdout, (labels[i] + ".contains() test").c_str());
+            assert(!lms[i]->contains(key));
         }
     }
 
     for (const auto &key : testKeys) {
-        for (auto &lm : lms) {
-            testInfoLog(stdout, (std::string(typeid(lm).name()) + ".erase() test").c_str());
-            assertNoException(lm->erase(key));
+        for (int i = 0; i < lms.size(); i++) {
+            testInfoLog(stdout, (labels[i] + ".erase() test").c_str());
+            assertNoException(lms[i]->erase(key));
         }
     }
 
     for (const auto &key : testKeys) {
-        for (const auto &lm : lms) {
-            testInfoLog(stdout, (std::string(typeid(lm).name()) + ".lookup() const test").c_str());
-            const HashOctree::LookupMethod &lm_const = *lm;
+        for (int i = 0; i < lms.size(); i++) {
+            testInfoLog(stdout, (labels[i] + ".lookup() const test").c_str());
+            const HashOctree::LookupMethod &lm_const = *lms[i];
             assertException(lm_const.lookup(key), std::out_of_range);
         }
     }
