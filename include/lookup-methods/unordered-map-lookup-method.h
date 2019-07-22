@@ -5,7 +5,7 @@
 
 namespace HashOctree {
 
-    class UnorderedMapLookupMethod : LookupMethod {
+    class UnorderedMapLookupMethod : public LookupMethod {
     private:
         std::unordered_map<key_t, NodeControlBlock> nodes;
 

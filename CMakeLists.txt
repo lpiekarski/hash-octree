@@ -31,5 +31,8 @@ find_package(Threads REQUIRED)
 add_executable(hash_octree_test ${libraries} ${sources} tests/hash-octree-test.cpp)
 target_link_libraries(hash_octree_test Threads::Threads)
 
+add_executable(lookup_method_test ${libraries} ${sources} tests/lookup-method-test.cpp)
+target_link_libraries(lookup_method_test Threads::Threads)
+
 # library
 add_library(hash-octree ${libraries} ${sources})
