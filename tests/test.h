@@ -12,6 +12,7 @@
 #define TEST_SUCCESS (1)
 #define TEST_EXCEPTION (2)
 #define TEST_TIMEOUT (3)
+#define TEST_NOEXCEPTION (4)
 
 #define TIMEOUT_SECONDS (20)
 
@@ -21,7 +22,8 @@ const char *test_result[] = {
         "assertion failed",
         "success",
         "exception",
-        "timeout"
+        "timeout",
+        "no exception"
 };
 
 #define assert(pred)\
@@ -57,6 +59,17 @@ const char *test_result[] = {
         return TEST_EXCEPTION;\
     }
 
+#define assertException(prog, Exception)\
+    try {\
+        prog;\
+        fprintf(stderr, "%s:%d except assertion failed\n", __func__, __LINE__);\
+        return TEST_NOEXCEPTION;\
+    } catch (const Exception &e) {\
+    } catch (...) {\
+        fprintf(stderr, "%s:%d except assertion failed\n", __func__, __LINE__);\
+        return TEST_NOEXCEPTION;\
+    }
+
 #define testInfoLog(stream, msg)\
     if (testContext == __func__) {\
         fprintf((stream), "\t%s\n",  (msg));\
@@ -76,5 +89,17 @@ const char *test_result[] = {
             __result = __future.get();\
         fprintf((stream), "\t%s test result: %s\n\n",  testContext.c_str(), test_result[__result]);\
 
+#define TEST_MAIN \
+int main() {\
+    int ret = 0;\
+\
+    for (auto test_func : tests) {\
+        testStatusLog(stdout, test_func);\
+        if (__result != TEST_SUCCESS)\
+            ret = 1;\
+    }\
+\
+    return ret;\
+}\
 
 #endif // __TEST_H__
