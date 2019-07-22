@@ -1,0 +1,83 @@
+\hypertarget{class_hash_octree_1_1_encryptor}{}\section{Hash\+Octree\+::Encryptor Class Reference}
+\label{class_hash_octree_1_1_encryptor}\index{HashOctree::Encryptor@{HashOctree::Encryptor}}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static key\+\_\+t \mbox{\hyperlink{class_hash_octree_1_1_encryptor_a02e1c9d854ee1d296cee98776e098fe5}{encrypt}} (const \mbox{\hyperlink{class_hash_octree_1_1_node}{Node}} \&node)
+\item 
+static key\+\_\+t \mbox{\hyperlink{class_hash_octree_1_1_encryptor_a513e44d8beda3d37460fefdca165a9e3}{encrypt}} (const key\+\_\+t $\ast$children, const void $\ast$data)
+\item 
+static key\+\_\+t \mbox{\hyperlink{class_hash_octree_1_1_encryptor_a96ce6d479c6b28f1f61c99989aa7a976}{encrypt}} (const void $\ast$data)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 9 of file encryptor.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_hash_octree_1_1_encryptor_a02e1c9d854ee1d296cee98776e098fe5}\label{class_hash_octree_1_1_encryptor_a02e1c9d854ee1d296cee98776e098fe5}} 
+\index{HashOctree::Encryptor@{HashOctree::Encryptor}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!HashOctree::Encryptor@{HashOctree::Encryptor}}
+\subsubsection{\texorpdfstring{encrypt()}{encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily key\+\_\+t Hash\+Octree\+::\+Encryptor\+::encrypt (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_hash_octree_1_1_node}{Node}} \&}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. 
+\begin{DoxyParams}{Parameters}
+{\em node} & \mbox{\hyperlink{class_hash_octree_1_1_hash_octree}{Hash\+Octree}} node object to be encrypted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+key produced from the node object 
+\end{DoxyReturn}
+
+
+Definition at line 30 of file encryptor.\+cpp.
+
+\mbox{\Hypertarget{class_hash_octree_1_1_encryptor_a513e44d8beda3d37460fefdca165a9e3}\label{class_hash_octree_1_1_encryptor_a513e44d8beda3d37460fefdca165a9e3}} 
+\index{HashOctree::Encryptor@{HashOctree::Encryptor}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!HashOctree::Encryptor@{HashOctree::Encryptor}}
+\subsubsection{\texorpdfstring{encrypt()}{encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily key\+\_\+t Hash\+Octree\+::\+Encryptor\+::encrypt (\begin{DoxyParamCaption}\item[{const key\+\_\+t $\ast$}]{children,  }\item[{const void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. 
+\begin{DoxyParams}{Parameters}
+{\em children} & children key values of the node object \\
+\hline
+{\em data} & data field value of the node object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+key produced from the node object 
+\end{DoxyReturn}
+
+
+Definition at line 10 of file encryptor.\+cpp.
+
+\mbox{\Hypertarget{class_hash_octree_1_1_encryptor_a96ce6d479c6b28f1f61c99989aa7a976}\label{class_hash_octree_1_1_encryptor_a96ce6d479c6b28f1f61c99989aa7a976}} 
+\index{HashOctree::Encryptor@{HashOctree::Encryptor}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!HashOctree::Encryptor@{HashOctree::Encryptor}}
+\subsubsection{\texorpdfstring{encrypt()}{encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily key\+\_\+t Hash\+Octree\+::\+Encryptor\+::encrypt (\begin{DoxyParamCaption}\item[{const void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. 
+\begin{DoxyParams}{Parameters}
+{\em data} & data field value of the node object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+key produced from the node object with {\ttfamily data} and children keys equal to 0. 
+\end{DoxyReturn}
+
+
+Definition at line 23 of file encryptor.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/encryptor.\+h\item 
+src/encryptor.\+cpp\end{DoxyCompactItemize}

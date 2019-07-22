@@ -1,0 +1,86 @@
+\hypertarget{class_hash_octree_1_1_hash_octree}{}\section{Hash\+Octree\+::Hash\+Octree$<$ LM, typename $>$ Class Template Reference}
+\label{class_hash_octree_1_1_hash_octree}\index{HashOctree::HashOctree$<$ LM, typename $>$@{HashOctree::HashOctree$<$ LM, typename $>$}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a3f7c9cdda60165a7dc5f141ed61223a5}\label{class_hash_octree_1_1_hash_octree_a3f7c9cdda60165a7dc5f141ed61223a5}} 
+{\bfseries Hash\+Octree} (const \mbox{\hyperlink{class_hash_octree_1_1_node_dims}{Node\+Dims}} \&dim, const dim\+\_\+t $\ast$precision)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a00e03ca6bcd7f753165788959beb7b71}\label{class_hash_octree_1_1_hash_octree_a00e03ca6bcd7f753165788959beb7b71}} 
+dim\+\_\+t {\bfseries getX} () const
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a7a19ffbdb5b171b362fb196ebf1e4a75}\label{class_hash_octree_1_1_hash_octree_a7a19ffbdb5b171b362fb196ebf1e4a75}} 
+dim\+\_\+t {\bfseries getY} () const
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a1414071b29e86153061456a90290f044}\label{class_hash_octree_1_1_hash_octree_a1414071b29e86153061456a90290f044}} 
+dim\+\_\+t {\bfseries getZ} () const
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a23cf5c4874bec3faf81f71038880869d}\label{class_hash_octree_1_1_hash_octree_a23cf5c4874bec3faf81f71038880869d}} 
+dim\+\_\+t {\bfseries get\+Half\+Width} () const
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a4fe36820f49b62193de70925311cbc9d}\label{class_hash_octree_1_1_hash_octree_a4fe36820f49b62193de70925311cbc9d}} 
+dim\+\_\+t {\bfseries get\+Half\+Height} () const
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a0dbd000807a19cd0f3ea26f4def008ca}\label{class_hash_octree_1_1_hash_octree_a0dbd000807a19cd0f3ea26f4def008ca}} 
+dim\+\_\+t {\bfseries get\+Half\+Depth} () const
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a7943b3b188e74d60a1fda9481790de9f}\label{class_hash_octree_1_1_hash_octree_a7943b3b188e74d60a1fda9481790de9f}} 
+status\+\_\+t {\bfseries remove} (const \mbox{\hyperlink{class_hash_octree_1_1_node_control_block}{Node\+Control\+Block}} \&ncb, int flags=0)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a124574ae9ee2a67f570e21fd5fb514e6}\label{class_hash_octree_1_1_hash_octree_a124574ae9ee2a67f570e21fd5fb514e6}} 
+status\+\_\+t {\bfseries remove} (const \mbox{\hyperlink{class_hash_octree_1_1_node}{Node}} \&n, int flags=0)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a7dd230a896779e16fb86a2f85c84e67a}\label{class_hash_octree_1_1_hash_octree_a7dd230a896779e16fb86a2f85c84e67a}} 
+status\+\_\+t {\bfseries remove} (key\+\_\+t nkey, int flags=0)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_ae31f35cf0eeab0d7ec255e8ebb7e57cf}\label{class_hash_octree_1_1_hash_octree_ae31f35cf0eeab0d7ec255e8ebb7e57cf}} 
+status\+\_\+t {\bfseries create} (const \mbox{\hyperlink{class_hash_octree_1_1_node}{Node}} \&n, key\+\_\+t $\ast$res, int flags=0)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a873642eaadcddbe0b09783c6093faef8}\label{class_hash_octree_1_1_hash_octree_a873642eaadcddbe0b09783c6093faef8}} 
+status\+\_\+t {\bfseries create} (const key\+\_\+t $\ast$children, const void $\ast$data, key\+\_\+t $\ast$res, int flags=0)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_acf3533b7fd71b655818c97ee7acb2e82}\label{class_hash_octree_1_1_hash_octree_acf3533b7fd71b655818c97ee7acb2e82}} 
+status\+\_\+t {\bfseries create} (const void $\ast$data, key\+\_\+t $\ast$res, int flags=0)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_aa79e8b65dfb51c666074b12c693cea5c}\label{class_hash_octree_1_1_hash_octree_aa79e8b65dfb51c666074b12c693cea5c}} 
+status\+\_\+t {\bfseries change\+Root} (key\+\_\+t new\+Root)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_ad4821f26085b729920cdf5f6dcc4566f}\label{class_hash_octree_1_1_hash_octree_ad4821f26085b729920cdf5f6dcc4566f}} 
+status\+\_\+t {\bfseries resize} (dim\+\_\+t half\+Width, dim\+\_\+t half\+Height, dim\+\_\+t half\+Depth)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a898985692691738c8ebac68adfed4326}\label{class_hash_octree_1_1_hash_octree_a898985692691738c8ebac68adfed4326}} 
+status\+\_\+t {\bfseries reposition} (dim\+\_\+t x, dim\+\_\+t y, dim\+\_\+t z)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_aedacd7d64e8ca54ef12f7edc65bfa609}\label{class_hash_octree_1_1_hash_octree_aedacd7d64e8ca54ef12f7edc65bfa609}} 
+status\+\_\+t {\bfseries add\+Data\+Point} (const \mbox{\hyperlink{class_hash_octree_1_1_node_dims}{Node\+Dims}} \&dims, void $\ast$data)
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a7afe494a353a2a7218d421ee0c78756d}\label{class_hash_octree_1_1_hash_octree_a7afe494a353a2a7218d421ee0c78756d}} 
+status\+\_\+t {\bfseries recount\+Refs} ()
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_ad8384c189348174bf10326c020a596fc}\label{class_hash_octree_1_1_hash_octree_ad8384c189348174bf10326c020a596fc}} 
+status\+\_\+t {\bfseries add\+Data\+Shape} (std\+::function$<$ bool(const \mbox{\hyperlink{class_hash_octree_1_1_node_dims}{Node\+Dims}} \&)$>$ intersects, std\+::function$<$ bool(const \mbox{\hyperlink{class_hash_octree_1_1_node_dims}{Node\+Dims}} \&)$>$ contains, std\+::function$<$ void $\ast$(const \mbox{\hyperlink{class_hash_octree_1_1_node_dims}{Node\+Dims}} \&dims)$>$ data\+Func)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_a2f641968ee4a70e8f584a437b28b8f5a}\label{class_hash_octree_1_1_hash_octree_a2f641968ee4a70e8f584a437b28b8f5a}} 
+class {\bfseries Exporter}
+\item 
+\mbox{\Hypertarget{class_hash_octree_1_1_hash_octree_ad2d8744585dcb094644b1caed04ac9ed}\label{class_hash_octree_1_1_hash_octree_ad2d8744585dcb094644b1caed04ac9ed}} 
+class {\bfseries Importer}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename LM = Unordered\+Map\+Lookup\+Method, typename = typename std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<$\+Lookup\+Method, L\+M$>$\+::value$>$\+::type$>$\newline
+class Hash\+Octree\+::\+Hash\+Octree$<$ L\+M, typename $>$}
+
+
+
+Definition at line 16 of file hash-\/octree.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/hash-\/octree.\+h\end{DoxyCompactItemize}
