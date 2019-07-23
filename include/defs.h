@@ -8,6 +8,7 @@ namespace HashOctree {
     using key_t = uint64_t;
     using dim_t = double;
     using status_t = int64_t;
+    using data_t = void*;
 
     const status_t INDEX_OUT_OF_BOUNDS = -7;
     const status_t KEY_COLLISION       = -6;

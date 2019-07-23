@@ -40,7 +40,7 @@ namespace HashOctree {
             this->root = 0;
         }
 
-        status_t addDataShapeRec(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<void*(const NodeDims &dims)> dataFunc,
+        status_t addDataShapeRec(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<data_t(const NodeDims &dims)> dataFunc,
                                  NodeOperationBlock &curr, key_t *out_key) {
             status_t ret = OK;
             key_t cleanupKey = 0;
@@ -109,7 +109,7 @@ namespace HashOctree {
 
             // if all children store the same data we can merge them
             bool hasSameData = true;
-            void *sameData = lookupMethod.lookup(children[0]).node.data;
+            data_t sameData = lookupMethod.lookup(children[0]).node.data;
             for (int i = 1; i < 8; i++) {
                 if (lookupMethod.lookup(children[i]).node.data != sameData) {
                     hasSameData = false;
@@ -237,11 +237,11 @@ namespace HashOctree {
             return OK;
         }
 
-        status_t create(const key_t *children, const void *data, key_t *res, int flags=0) {
+        status_t create(const key_t *children, const data_t data, key_t *res, int flags=0) {
             return this->create(Node(children, data), res, flags);
         }
 
-        status_t create(const void *data, key_t *res, int flags=0) {
+        status_t create(const data_t data, key_t *res, int flags=0) {
             key_t empty_children[8];
             for (size_t i = 0; i < 8; i++)
                 empty_children[i] = 0;
@@ -277,7 +277,7 @@ namespace HashOctree {
             return OK;
         }
 
-        status_t addDataPoint(const NodeDims &dims, void *data) {
+        status_t addDataPoint(const NodeDims &dims, data_t data) {
             NodeOperationBlock rootNob;
             rootNob.parent = nullptr;
             rootNob.ncb = &lookupMethod.lookup(this->root);
@@ -318,7 +318,7 @@ namespace HashOctree {
             return OK;
         }
 
-        status_t addDataShape(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<void*(const NodeDims &dims)> dataFunc) {
+        status_t addDataShape(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<data_t(const NodeDims &dims)> dataFunc) {
             NodeOperationBlock rootNob;
             rootNob.parent = nullptr;
             rootNob.ncb = &lookupMethod.lookup(this->root);
