@@ -9,4 +9,4 @@ compiler:
 os:
   - linux
   - osx
-script: cmake . && make && ./hash_octree_test && ./lookup_method_test
+script: ./build.sh && ./test.sh
