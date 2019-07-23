@@ -26,11 +26,11 @@ namespace HashOctree {
     class Node {
     public:
         key_t children[8];
-        void *data;
+        data_t data;
 
         Node() = default;
 
-        Node(const key_t *children, const void *data);
+        Node(const key_t *children, const data_t data);
 
         friend bool operator==(const Node &n1, const Node &n2);
 

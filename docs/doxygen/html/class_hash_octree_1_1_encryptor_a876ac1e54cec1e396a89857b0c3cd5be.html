@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>HashOctree: HashOctree::Point Class Reference</title>
+<title>HashOctree: HashOctree::Encryptor::encrypt</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,7 +67,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('class_hash_octree_1_1_point.html','');});
+$(document).ready(function(){initNavTree('class_hash_octree_1_1_encryptor_a876ac1e54cec1e396a89857b0c3cd5be.html','');});
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -85,46 +85,59 @@ $(document).ready(function(){initNavTree('class_hash_octree_1_1_point.html','');
 </iframe>
 </div>
 
-<div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
-<a href="class_hash_octree_1_1_point-members.html">List of all members</a>  </div>
-  <div class="headertitle">
-<div class="title">HashOctree::Point Class Reference</div>  </div>
-</div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a25bf5dc109d97354ba1f11c3e3931086"><td class="memItemLeft" align="right" valign="top"><a id="a25bf5dc109d97354ba1f11c3e3931086"></a>
-<a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dim</b></td></tr>
-<tr class="separator:a25bf5dc109d97354ba1f11c3e3931086"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ed437d6d45a23601a468ccca3092d85"><td class="memItemLeft" align="right" valign="top"><a id="a5ed437d6d45a23601a468ccca3092d85"></a>
-data_t&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:a5ed437d6d45a23601a468ccca3092d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:ac7c7e29a9e81197fa739bbf8fbfaacec"><td class="memItemLeft" align="right" valign="top"><a id="ac7c7e29a9e81197fa739bbf8fbfaacec"></a>
-std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;&gt;</b> (std::istream &amp;is, const <a class="el" href="class_hash_octree_1_1_point.html">Point</a> &amp;p)</td></tr>
-<tr class="separator:ac7c7e29a9e81197fa739bbf8fbfaacec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab55cf13db83c55c46a961b2b2441960"><td class="memItemLeft" align="right" valign="top"><a id="aab55cf13db83c55c46a961b2b2441960"></a>
-std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="class_hash_octree_1_1_point.html">Point</a> &amp;p)</td></tr>
-<tr class="separator:aab55cf13db83c55c46a961b2b2441960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<a id="a876ac1e54cec1e396a89857b0c3cd5be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a876ac1e54cec1e396a89857b0c3cd5be">&#9670;&nbsp;</a></span>encrypt() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">key_t HashOctree::Encryptor::encrypt </td>
+          <td>(</td>
+          <td class="paramtype">const key_t *&#160;</td>
+          <td class="paramname"><em>children</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const data_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="point-data_8h_source.html#l00011">11</a> of file <a class="el" href="point-data_8h_source.html">point-data.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="point-data_8h_source.html">point-data.h</a></li>
-</ul>
+</div><div class="memdoc">
+<p>Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">children</td><td>children key values of the node object </td></tr>
+    <tr><td class="paramname">data</td><td>data field value of the node object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>key produced from the node object </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="encryptor_8cpp_source.html#l00010">10</a> of file <a class="el" href="encryptor_8cpp_source.html">encryptor.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>HashOctree</b></li><li class="navelem"><a class="el" href="class_hash_octree_1_1_point.html">Point</a></li>
+    <li class="navelem"><b>HashOctree</b></li><li class="navelem"><a class="el" href="class_hash_octree_1_1_encryptor.html">Encryptor</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>

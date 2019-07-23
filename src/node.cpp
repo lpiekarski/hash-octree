@@ -32,8 +32,8 @@ namespace HashOctree {
          origin[2] + halfDim[2] <= dims.origin[2] - dims.halfDim[2]));
     }
 
-    Node::Node(const key_t *children, const void *data) {
-        this->data = (void *)data;
+    Node::Node(const key_t *children, const data_t data) {
+        this->data = data;
         for (size_t i = 0; i < 8; i++)
             this->children[i] = children[i];
     }
