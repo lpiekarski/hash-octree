@@ -12,19 +12,15 @@ namespace HashOctree {
         std::map<key_t, NodeControlBlock> nodes;
 
     public:
-        NodeControlBlock &lookup(key_t key);
-
-        const NodeControlBlock &lookup(key_t key) const;
+        status_t lookup(key_t key, NodeControlBlock **outNcb);
 
         bool contains(key_t key);
 
-        void insert(key_t key, const NodeControlBlock &ncb);
+        status_t insert(key_t key, const NodeControlBlock &ncb);
 
-        void erase(key_t key);
+        status_t erase(key_t key);
 
         std::vector<std::pair<key_t, NodeControlBlock&>> list();
-
-        std::vector<std::pair<key_t, const NodeControlBlock&>> list() const;
     };
 
 }
