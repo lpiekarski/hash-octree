@@ -57,11 +57,12 @@ namespace HashOctree {
 
         NodeOperationBlock() = default;
 
+        //TODO error handling in this function
         template <typename LookupMethod>
         NodeOperationBlock getChildNOB(int child_id, LookupMethod &lookupMethod) const {
             NodeOperationBlock ret;
 
-            ret.ncb = &lookupMethod.lookup(this->ncb->node.children[child_id]);
+            lookupMethod.lookup(this->ncb->node.children[child_id], &ret.ncb);
             ret.parent = this->ncb;
             ret.dim.halfDim[0] = this->dim.halfDim[0] * 0.5;
             ret.dim.halfDim[1] = this->dim.halfDim[1] * 0.5;

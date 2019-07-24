@@ -108,27 +108,21 @@ $(document).ready(function(){initNavTree('class_hash_octree_1_1_lookup_method.ht
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a58a239f1c1ce4da578230e364d5c4657"><td class="memItemLeft" align="right" valign="top"><a id="a58a239f1c1ce4da578230e364d5c4657"></a>
-virtual <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>lookup</b> (key_t key)=0</td></tr>
-<tr class="separator:a58a239f1c1ce4da578230e364d5c4657"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d64b539b3f099248706b5cd8ad0ef2a"><td class="memItemLeft" align="right" valign="top"><a id="a5d64b539b3f099248706b5cd8ad0ef2a"></a>
-virtual const <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>lookup</b> (key_t key) const =0</td></tr>
-<tr class="separator:a5d64b539b3f099248706b5cd8ad0ef2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e35b85a9b630e022c17d5b0d2da71da"><td class="memItemLeft" align="right" valign="top"><a id="a4e35b85a9b630e022c17d5b0d2da71da"></a>
+virtual status_t&#160;</td><td class="memItemRight" valign="bottom"><b>lookup</b> (key_t key, <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> **outNcb)=0</td></tr>
+<tr class="separator:a4e35b85a9b630e022c17d5b0d2da71da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcf3e2deab4804f5141361895a0ccf0a"><td class="memItemLeft" align="right" valign="top"><a id="adcf3e2deab4804f5141361895a0ccf0a"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>contains</b> (key_t key)=0</td></tr>
 <tr class="separator:adcf3e2deab4804f5141361895a0ccf0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a955f05c8d0b805800d8a219729c11d5e"><td class="memItemLeft" align="right" valign="top"><a id="a955f05c8d0b805800d8a219729c11d5e"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>insert</b> (key_t key, const <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> &amp;ncb)=0</td></tr>
-<tr class="separator:a955f05c8d0b805800d8a219729c11d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23e22680e713b8bce7d28140dade2a95"><td class="memItemLeft" align="right" valign="top"><a id="a23e22680e713b8bce7d28140dade2a95"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>erase</b> (key_t key)=0</td></tr>
-<tr class="separator:a23e22680e713b8bce7d28140dade2a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab36c1980bd62471302d56a8eb41fdeb"><td class="memItemLeft" align="right" valign="top"><a id="aab36c1980bd62471302d56a8eb41fdeb"></a>
+virtual status_t&#160;</td><td class="memItemRight" valign="bottom"><b>insert</b> (key_t key, const <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> &amp;ncb)=0</td></tr>
+<tr class="separator:aab36c1980bd62471302d56a8eb41fdeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6486fff0a39aa0c2a19a2cb19bd4aa94"><td class="memItemLeft" align="right" valign="top"><a id="a6486fff0a39aa0c2a19a2cb19bd4aa94"></a>
+virtual status_t&#160;</td><td class="memItemRight" valign="bottom"><b>erase</b> (key_t key)=0</td></tr>
+<tr class="separator:a6486fff0a39aa0c2a19a2cb19bd4aa94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0afc2536256ef56a317162a16c361b1"><td class="memItemLeft" align="right" valign="top"><a id="aa0afc2536256ef56a317162a16c361b1"></a>
 virtual std::vector&lt; std::pair&lt; key_t, <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> &amp; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>list</b> ()=0</td></tr>
 <tr class="separator:aa0afc2536256ef56a317162a16c361b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88d11f75aa4310412670e386a7fab056"><td class="memItemLeft" align="right" valign="top"><a id="a88d11f75aa4310412670e386a7fab056"></a>
-virtual std::vector&lt; std::pair&lt; key_t, const <a class="el" href="class_hash_octree_1_1_node_control_block.html">NodeControlBlock</a> &amp; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>list</b> () const =0</td></tr>
-<tr class="separator:a88d11f75aa4310412670e386a7fab056"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">

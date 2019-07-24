@@ -15,7 +15,7 @@ namespace HashOctree {
     public:
 
         template <typename ELM, typename EE>
-        static std::string toString(const HashOctree<ELM, EE> &ho) {
+        static std::string toString(HashOctree<ELM, EE> &ho) {
             std::stringstream ss("");
             ss.fill('0');
             ss << "root: " << std::setw(16) << std::hex << ho.root << "\n";
@@ -31,7 +31,7 @@ namespace HashOctree {
         }
 
         template <typename ELM, typename EE>
-        static std::string toJson(const HashOctree<ELM, EE> &ho, size_t indentWidth=0, bool newLines=false) {
+        static std::string toJson(HashOctree<ELM, EE> &ho, size_t indentWidth=0, bool newLines=false) {
             std::stringstream ss("");
             size_t indents = 0;
             char newLine;
@@ -115,7 +115,7 @@ namespace HashOctree {
         }
 
         template <typename ELM, typename EE>
-        static std::vector<char> toByteArray(const HashOctree<ELM, EE> &ho) {
+        static std::vector<char> toByteArray(HashOctree<ELM, EE> &ho) {
             std::vector<char> ret;
             DataUtils::push_int<uint64_t>(ret, ho.root);
 
