@@ -2,39 +2,33 @@
 
 namespace HashOctree {
 
-    NodeControlBlock& UnorderedMapLookupMethod::lookup(key_t key) {
-        return nodes[key];
-    }
 
-    const NodeControlBlock& UnorderedMapLookupMethod::lookup(key_t key) const {
-        return nodes.at(key);
+    status_t UnorderedMapLookupMethod::lookup(key_t key, NodeControlBlock **outNcb) {
+        if (nodes.count(key) == 0)
+            return NODE_DOESNT_EXIST;
+        if (outNcb != nullptr)
+            *outNcb = &nodes[key];
+        return OK;
     }
 
     bool UnorderedMapLookupMethod::contains(key_t key) {
         return nodes.count(key) > 0;
     }
 
-    void UnorderedMapLookupMethod::insert(key_t key, const NodeControlBlock &ncb) {
+    status_t UnorderedMapLookupMethod::insert(key_t key, const NodeControlBlock &ncb) {
         nodes[key] = ncb;
+        return OK;
     }
 
-    void UnorderedMapLookupMethod::erase(key_t key) {
+    status_t UnorderedMapLookupMethod::erase(key_t key) {
         nodes.erase(key);
+        return OK;
     }
 
     std::vector<std::pair<key_t, NodeControlBlock&>> UnorderedMapLookupMethod::list() {
         std::vector<std::pair<key_t, NodeControlBlock&>> ret;
 
         for (auto &kv : nodes)
-            ret.emplace_back(kv.first, kv.second);
-
-        return ret;
-    }
-
-    std::vector<std::pair<key_t, const NodeControlBlock&>> UnorderedMapLookupMethod::list() const {
-        std::vector<std::pair<key_t, const NodeControlBlock&>> ret;
-
-        for (const auto &kv : nodes)
             ret.emplace_back(kv.first, kv.second);
 
         return ret;

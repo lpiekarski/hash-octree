@@ -30,6 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">HashOctree
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -129,12 +130,12 @@ status_t&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> (key_t
 <tr class="memitem:ae31f35cf0eeab0d7ec255e8ebb7e57cf"><td class="memItemLeft" align="right" valign="top"><a id="ae31f35cf0eeab0d7ec255e8ebb7e57cf"></a>
 status_t&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const <a class="el" href="class_hash_octree_1_1_node.html">Node</a> &amp;n, key_t *res, int flags=0)</td></tr>
 <tr class="separator:ae31f35cf0eeab0d7ec255e8ebb7e57cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a873642eaadcddbe0b09783c6093faef8"><td class="memItemLeft" align="right" valign="top"><a id="a873642eaadcddbe0b09783c6093faef8"></a>
-status_t&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const key_t *children, const void *data, key_t *res, int flags=0)</td></tr>
-<tr class="separator:a873642eaadcddbe0b09783c6093faef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf3533b7fd71b655818c97ee7acb2e82"><td class="memItemLeft" align="right" valign="top"><a id="acf3533b7fd71b655818c97ee7acb2e82"></a>
-status_t&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const void *data, key_t *res, int flags=0)</td></tr>
-<tr class="separator:acf3533b7fd71b655818c97ee7acb2e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e3fcea0618a43e681a6134b5249bba"><td class="memItemLeft" align="right" valign="top"><a id="a17e3fcea0618a43e681a6134b5249bba"></a>
+status_t&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const key_t *children, const data_t data, key_t *res, int flags=0)</td></tr>
+<tr class="separator:a17e3fcea0618a43e681a6134b5249bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42856bbee42ad14579ea671be78eb684"><td class="memItemLeft" align="right" valign="top"><a id="a42856bbee42ad14579ea671be78eb684"></a>
+status_t&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const data_t data, key_t *res, int flags=0)</td></tr>
+<tr class="separator:a42856bbee42ad14579ea671be78eb684"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa79e8b65dfb51c666074b12c693cea5c"><td class="memItemLeft" align="right" valign="top"><a id="aa79e8b65dfb51c666074b12c693cea5c"></a>
 status_t&#160;</td><td class="memItemRight" valign="bottom"><b>changeRoot</b> (key_t newRoot)</td></tr>
 <tr class="separator:aa79e8b65dfb51c666074b12c693cea5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,15 +145,15 @@ status_t&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (dim_t
 <tr class="memitem:a898985692691738c8ebac68adfed4326"><td class="memItemLeft" align="right" valign="top"><a id="a898985692691738c8ebac68adfed4326"></a>
 status_t&#160;</td><td class="memItemRight" valign="bottom"><b>reposition</b> (dim_t x, dim_t y, dim_t z)</td></tr>
 <tr class="separator:a898985692691738c8ebac68adfed4326"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedacd7d64e8ca54ef12f7edc65bfa609"><td class="memItemLeft" align="right" valign="top"><a id="aedacd7d64e8ca54ef12f7edc65bfa609"></a>
-status_t&#160;</td><td class="memItemRight" valign="bottom"><b>addDataPoint</b> (const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;dims, void *data)</td></tr>
-<tr class="separator:aedacd7d64e8ca54ef12f7edc65bfa609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affebefc64ab0a814da9ec0b0056509b1"><td class="memItemLeft" align="right" valign="top"><a id="affebefc64ab0a814da9ec0b0056509b1"></a>
+status_t&#160;</td><td class="memItemRight" valign="bottom"><b>addDataPoint</b> (const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;dims, data_t data)</td></tr>
+<tr class="separator:affebefc64ab0a814da9ec0b0056509b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7afe494a353a2a7218d421ee0c78756d"><td class="memItemLeft" align="right" valign="top"><a id="a7afe494a353a2a7218d421ee0c78756d"></a>
 status_t&#160;</td><td class="memItemRight" valign="bottom"><b>recountRefs</b> ()</td></tr>
 <tr class="separator:a7afe494a353a2a7218d421ee0c78756d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8384c189348174bf10326c020a596fc"><td class="memItemLeft" align="right" valign="top"><a id="ad8384c189348174bf10326c020a596fc"></a>
-status_t&#160;</td><td class="memItemRight" valign="bottom"><b>addDataShape</b> (std::function&lt; bool(const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;)&gt; intersects, std::function&lt; bool(const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;)&gt; contains, std::function&lt; void *(const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;dims)&gt; dataFunc)</td></tr>
-<tr class="separator:ad8384c189348174bf10326c020a596fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2426ee07acdfd235521c48880c44f738"><td class="memItemLeft" align="right" valign="top"><a id="a2426ee07acdfd235521c48880c44f738"></a>
+status_t&#160;</td><td class="memItemRight" valign="bottom"><b>addDataShape</b> (std::function&lt; bool(const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;)&gt; intersects, std::function&lt; bool(const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;)&gt; contains, std::function&lt; data_t(const <a class="el" href="class_hash_octree_1_1_node_dims.html">NodeDims</a> &amp;dims)&gt; dataFunc)</td></tr>
+<tr class="separator:a2426ee07acdfd235521c48880c44f738"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -170,7 +171,7 @@ class HashOctree::HashOctree&lt; LM, typename &gt;</h3>
 
 <p class="definition">Definition at line <a class="el" href="hash-octree_8h_source.html#l00016">16</a> of file <a class="el" href="hash-octree_8h_source.html">hash-octree.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/<a class="el" href="hash-octree_8h_source.html">hash-octree.h</a></li>
+<li><a class="el" href="hash-octree_8h_source.html">hash-octree.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

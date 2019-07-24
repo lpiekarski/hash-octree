@@ -40,7 +40,7 @@ namespace HashOctree {
             this->root = 0;
         }
 
-        status_t addDataShapeRec(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<void*(const NodeDims &dims)> dataFunc,
+        status_t addDataShapeRec(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<data_t(const NodeDims &dims)> dataFunc,
                                  NodeOperationBlock &curr, key_t *out_key) {
             status_t ret = OK;
             key_t cleanupKey = 0;
@@ -89,7 +89,8 @@ namespace HashOctree {
                 // we have to mark the new node for cleanup since it is outside
                 // of the main root-leaf path and can become unused
                 // after coming back from children
-                curr.ncb = &lookupMethod.lookup(key);
+                if ((ret = lookupMethod.lookup(key, &curr.ncb)) != OK)
+                    return ret;
                 cleanupKey = key;
             }
 
@@ -109,9 +110,15 @@ namespace HashOctree {
 
             // if all children store the same data we can merge them
             bool hasSameData = true;
-            void *sameData = lookupMethod.lookup(children[0]).node.data;
+            NodeControlBlock *ch0Ncb;
+            if ((ret = lookupMethod.lookup(children[0], &ch0Ncb)) != OK)
+                return ret;
+            data_t sameData = ch0Ncb->node.data;
             for (int i = 1; i < 8; i++) {
-                if (lookupMethod.lookup(children[i]).node.data != sameData) {
+                NodeControlBlock *chNcb;
+                if ((ret = lookupMethod.lookup(children[i], &chNcb)) != OK)
+                    return ret;
+                if (chNcb->node.data != sameData) {
                     hasSameData = false;
                     break;
                 }
@@ -163,6 +170,7 @@ namespace HashOctree {
         dim_t getHalfDepth() const { return this->dim.halfDim[2]; }
 
         status_t remove(const NodeControlBlock &ncb, int flags=0) {
+            status_t ret = OK;
             if (!lookupMethod.contains(ncb.key))
                 return NODE_DOESNT_EXIST;
             if (ncb.key == this->root && !(flags & FL_FORCE))
@@ -176,7 +184,10 @@ namespace HashOctree {
             }
 
             for (size_t i = 0; i < 8; i++) {
-                lookupMethod.lookup(ncb.node.children[i]).refs--;
+                NodeControlBlock *chNcb;
+                if ((ret = lookupMethod.lookup(ncb.node.children[i], &chNcb)) != OK)
+                    return ret;
+                chNcb->refs--;
                 if (flags & FL_REC)
                     this->remove(ncb.node.children[i], flags);
             }
@@ -195,14 +206,20 @@ namespace HashOctree {
         }
 
         status_t remove(key_t nkey, int flags=0) {
+            status_t ret = OK;
             if (!lookupMethod.contains(nkey))
                 return NODE_DOESNT_EXIST;
 
-            return this->remove(lookupMethod.lookup(nkey), flags);
+            NodeControlBlock *ncb;
+            if ((ret = lookupMethod.lookup(nkey, &ncb)) != OK)
+                return ret;
+
+            return this->remove(*ncb, flags);
         }
 
         status_t create(const Node &n, key_t *res, int flags=0) {
             key_t nkey;
+            status_t ret = OK;
 
             for (size_t i = 0; i < 8; i++) {
                 if (!lookupMethod.contains(n.children[i]))
@@ -212,12 +229,14 @@ namespace HashOctree {
             nkey = Encryptor::encrypt(n);
 
             if (lookupMethod.contains(nkey)) {
-                const NodeControlBlock &ncb = lookupMethod.lookup(nkey);
+                NodeControlBlock *ncb;
+                if ((ret = lookupMethod.lookup(nkey, &ncb)) != OK)
+                    return ret;
 
                 if (res != nullptr)
                     (*res) = nkey;
 
-                if (ncb.node == n)
+                if (ncb->node == n)
                     return NODE_EXISTS;
                 return KEY_COLLISION;
             }
@@ -227,21 +246,25 @@ namespace HashOctree {
             ncb.refs = 0;
             ncb.key = nkey;
 
-            lookupMethod.insert(nkey, ncb);
+            if ((ret = lookupMethod.insert(nkey, ncb)) != OK)
+                return ret;
 
-            for (size_t i = 0; i < 8; i++)
-                lookupMethod.lookup(n.children[i]).refs++;
+            NodeControlBlock *chNcb;
+            for (size_t i = 0; i < 8; i++) {
+                if ((ret = lookupMethod.lookup(n.children[i], &chNcb)) != OK)
+                chNcb->refs++;
+            }
 
             if (res != nullptr)
                 (*res) = nkey;
             return OK;
         }
 
-        status_t create(const key_t *children, const void *data, key_t *res, int flags=0) {
+        status_t create(const key_t *children, const data_t data, key_t *res, int flags=0) {
             return this->create(Node(children, data), res, flags);
         }
 
-        status_t create(const void *data, key_t *res, int flags=0) {
+        status_t create(const data_t data, key_t *res, int flags=0) {
             key_t empty_children[8];
             for (size_t i = 0; i < 8; i++)
                 empty_children[i] = 0;
@@ -250,10 +273,16 @@ namespace HashOctree {
         }
 
         status_t changeRoot(key_t newRoot) {
+            status_t ret = OK;
             if (!lookupMethod.contains(newRoot))
                 return NODE_DOESNT_EXIST;
-            lookupMethod.lookup(this->root).refs--;
-            lookupMethod.lookup(newRoot).refs++;
+            NodeControlBlock *ncb;
+            if ((ret = lookupMethod.lookup(this->root, &ncb)) != OK)
+                return ret;
+            ncb->refs--;
+            if ((ret = lookupMethod.lookup(newRoot, &ncb)) != OK)
+                return ret;
+            ncb->refs++;
             key_t oldRoot = this->root;
             this->root = newRoot;
             this->remove(oldRoot, FL_REC);
@@ -277,10 +306,12 @@ namespace HashOctree {
             return OK;
         }
 
-        status_t addDataPoint(const NodeDims &dims, void *data) {
+        status_t addDataPoint(const NodeDims &dims, data_t data) {
+            status_t ret = OK;
             NodeOperationBlock rootNob;
             rootNob.parent = nullptr;
-            rootNob.ncb = &lookupMethod.lookup(this->root);
+            if ((ret = lookupMethod.lookup(this->root, &rootNob.ncb)) != OK)
+                return ret;
             rootNob.dim = this->dim;
 
             key_t newRoot;
@@ -300,6 +331,7 @@ namespace HashOctree {
 
         status_t recountRefs() {
             auto kvList = lookupMethod.list();
+            status_t ret = OK;
 
             for (auto &kv : kvList)
                 for (int i = 0; i < 8; i++)
@@ -309,19 +341,28 @@ namespace HashOctree {
             for (auto &kv : kvList)
                 kv.second.refs = 0;
 
-            lookupMethod.lookup(this->root).refs++;
+            NodeControlBlock *ncb;
+            if ((ret = lookupMethod.lookup(this->root, &ncb)) != OK)
+                return ret;
+            ncb->refs++;
 
-            for (auto &kv : kvList)
-                for (int i = 0; i < 8; i++)
-                    lookupMethod.lookup(kv.second.node.children[i]).refs++;
+            for (auto &kv : kvList) {
+                for (int i = 0; i < 8; i++) {
+                    if ((ret = lookupMethod.lookup(kv.second.node.children[i], &ncb)) != OK)
+                        return ret;
+                    ncb->refs++;
+                }
+            }
 
             return OK;
         }
 
-        status_t addDataShape(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<void*(const NodeDims &dims)> dataFunc) {
+        status_t addDataShape(std::function<bool(const NodeDims&)> intersects, std::function<bool(const NodeDims&)> contains, std::function<data_t(const NodeDims &dims)> dataFunc) {
+            status_t ret = OK;
             NodeOperationBlock rootNob;
             rootNob.parent = nullptr;
-            rootNob.ncb = &lookupMethod.lookup(this->root);
+            if ((ret = lookupMethod.lookup(this->root, &rootNob.ncb)) != OK)
+                return ret;
             rootNob.dim = this->dim;
 
             key_t newRoot;

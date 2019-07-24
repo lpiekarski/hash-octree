@@ -49,6 +49,8 @@ int test_02() {
             (uint64_t)1111111111111111
     };
 
+    HashOctree::NodeControlBlock *ncb;
+
     for (const auto &key : testKeys) {
         for (int i = 0; i < lms.size(); i++) {
             testInfoLog(stdout, (labels[i] + ".contains() test").c_str());
@@ -59,15 +61,14 @@ int test_02() {
     for (const auto &key : testKeys) {
         for (int i = 0; i < lms.size(); i++) {
             testInfoLog(stdout, (labels[i] + ".erase() test").c_str());
-            assertNoException(lms[i]->erase(key));
+            assertEqual(lms[i]->erase(key), HashOctree::OK);
         }
     }
 
     for (const auto &key : testKeys) {
         for (int i = 0; i < lms.size(); i++) {
-            testInfoLog(stdout, (labels[i] + ".lookup() const test").c_str());
-            const HashOctree::LookupMethod &lm_const = *lms[i];
-            assertException(lm_const.lookup(key), std::out_of_range);
+            testInfoLog(stdout, (labels[i] + ".lookup() test").c_str());
+            assertEqual(lms[i]->lookup(key, &ncb), HashOctree::NODE_DOESNT_EXIST);
         }
     }
 

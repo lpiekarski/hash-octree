@@ -30,6 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">HashOctree
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -95,136 +96,19 @@ $(document).ready(function(){initNavTree('class_hash_octree_1_1_encryptor.html',
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a02e1c9d854ee1d296cee98776e098fe5"><td class="memItemLeft" align="right" valign="top">static key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hash_octree_1_1_encryptor.html#a02e1c9d854ee1d296cee98776e098fe5">encrypt</a> (const <a class="el" href="class_hash_octree_1_1_node.html">Node</a> &amp;node)</td></tr>
+<tr class="memitem:a02e1c9d854ee1d296cee98776e098fe5"><td class="memItemLeft" align="right" valign="top">static key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hash_octree_1_1_encryptor_a02e1c9d854ee1d296cee98776e098fe5.html#a02e1c9d854ee1d296cee98776e098fe5">encrypt</a> (const <a class="el" href="class_hash_octree_1_1_node.html">Node</a> &amp;node)</td></tr>
 <tr class="separator:a02e1c9d854ee1d296cee98776e098fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a513e44d8beda3d37460fefdca165a9e3"><td class="memItemLeft" align="right" valign="top">static key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hash_octree_1_1_encryptor.html#a513e44d8beda3d37460fefdca165a9e3">encrypt</a> (const key_t *children, const void *data)</td></tr>
-<tr class="separator:a513e44d8beda3d37460fefdca165a9e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96ce6d479c6b28f1f61c99989aa7a976"><td class="memItemLeft" align="right" valign="top">static key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hash_octree_1_1_encryptor.html#a96ce6d479c6b28f1f61c99989aa7a976">encrypt</a> (const void *data)</td></tr>
-<tr class="separator:a96ce6d479c6b28f1f61c99989aa7a976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a876ac1e54cec1e396a89857b0c3cd5be"><td class="memItemLeft" align="right" valign="top">static key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hash_octree_1_1_encryptor_a876ac1e54cec1e396a89857b0c3cd5be.html#a876ac1e54cec1e396a89857b0c3cd5be">encrypt</a> (const key_t *children, const data_t data)</td></tr>
+<tr class="separator:a876ac1e54cec1e396a89857b0c3cd5be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1fe3652c0462bd989d38f3ba316c258"><td class="memItemLeft" align="right" valign="top">static key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hash_octree_1_1_encryptor_ac1fe3652c0462bd989d38f3ba316c258.html#ac1fe3652c0462bd989d38f3ba316c258">encrypt</a> (const data_t data)</td></tr>
+<tr class="separator:ac1fe3652c0462bd989d38f3ba316c258"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="encryptor_8h_source.html#l00009">9</a> of file <a class="el" href="encryptor_8h_source.html">encryptor.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a02e1c9d854ee1d296cee98776e098fe5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02e1c9d854ee1d296cee98776e098fe5">&#9670;&nbsp;</a></span>encrypt() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">key_t HashOctree::Encryptor::encrypt </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_hash_octree_1_1_node.html">Node</a> &amp;&#160;</td>
-          <td class="paramname"><em>node</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">node</td><td><a class="el" href="class_hash_octree_1_1_hash_octree.html">HashOctree</a> node object to be encrypted </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>key produced from the node object </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="encryptor_8cpp_source.html#l00030">30</a> of file <a class="el" href="encryptor_8cpp_source.html">encryptor.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a513e44d8beda3d37460fefdca165a9e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a513e44d8beda3d37460fefdca165a9e3">&#9670;&nbsp;</a></span>encrypt() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">key_t HashOctree::Encryptor::encrypt </td>
-          <td>(</td>
-          <td class="paramtype">const key_t *&#160;</td>
-          <td class="paramname"><em>children</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">children</td><td>children key values of the node object </td></tr>
-    <tr><td class="paramname">data</td><td>data field value of the node object </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>key produced from the node object </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="encryptor_8cpp_source.html#l00010">10</a> of file <a class="el" href="encryptor_8cpp_source.html">encryptor.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a96ce6d479c6b28f1f61c99989aa7a976"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96ce6d479c6b28f1f61c99989aa7a976">&#9670;&nbsp;</a></span>encrypt() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">key_t HashOctree::Encryptor::encrypt </td>
-          <td>(</td>
-          <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Produces a key for a given node. Nodes with the same children keys and same data field value always have the same key. Also a key of a node with all children keys equal to 0 and nullptr data value is also 0. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data field value of the node object </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>key produced from the node object with <code>data</code> and children keys equal to 0. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="encryptor_8cpp_source.html#l00023">23</a> of file <a class="el" href="encryptor_8cpp_source.html">encryptor.cpp</a>.</p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>include/<a class="el" href="encryptor_8h_source.html">encryptor.h</a></li>
-<li>src/<a class="el" href="encryptor_8cpp_source.html">encryptor.cpp</a></li>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="encryptor_8h_source.html">encryptor.h</a></li>
+<li><a class="el" href="encryptor_8cpp_source.html">encryptor.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

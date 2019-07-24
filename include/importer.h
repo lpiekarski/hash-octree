@@ -29,7 +29,7 @@ namespace HashOctree {
                     read_id += 8;
                 }
                 ret.lookupMethod.lookup(key).key = key;
-                ret.lookupMethod.lookup(key).node.data = (void *) data;
+                ret.lookupMethod.lookup(key).node.data = data;
                 for (int i = 0; i < 8; i++)
                     ret.lookupMethod.lookup(key).node.children[i] = children[i];
             }

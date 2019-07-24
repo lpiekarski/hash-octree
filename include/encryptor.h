@@ -33,7 +33,7 @@ namespace HashOctree {
          * @param data data field value of the node object
          * @return key produced from the node object
          */
-        static key_t encrypt(const key_t *children, const void *data);
+        static key_t encrypt(const key_t *children, const data_t data);
 
         /**
          * Produces a key for a given node.
@@ -47,7 +47,7 @@ namespace HashOctree {
          * @return key produced from the node object with
          * @p data and children keys equal to 0.
          */
-        static key_t encrypt(const void *data);
+        static key_t encrypt(const data_t data);
     };
 
 }

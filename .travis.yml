@@ -9,4 +9,6 @@ compiler:
 os:
   - linux
   - osx
-script: cmake . && make && ./hash_octree_test && ./lookup_method_test
+before_install:
+  - chmod +x build.sh && chmod +x test.sh
+script: ./build.sh && ./test.sh

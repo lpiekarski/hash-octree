@@ -1,0 +1,2 @@
+cmake .
+make hash-octree
